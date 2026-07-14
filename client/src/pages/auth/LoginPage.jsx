@@ -56,16 +56,6 @@ const LoginPage = () => {
           Don't have an account? <Link to="/register" style={{ fontWeight: 600, color: 'var(--primary)' }}>Register here</Link>
         </div>
 
-        {/* Demo credentials */}
-        <div style={{ marginTop: '1.5rem', padding: '1rem', background: 'var(--primary-pale)', borderRadius: 'var(--radius-md)', fontSize: '0.8rem' }}>
-          <strong style={{ color: 'var(--primary)' }}>Demo Credentials:</strong>
-          <div style={{ marginTop: '0.5rem', display: 'grid', gap: '0.25rem' }}>
-            <div>🌾 Farmer: <code>farmer1@aifarm.com</code></div>
-            <div>🛒 Buyer: <code>buyer1@aifarm.com</code></div>
-            <div>⚙️ Admin: <code>admin@aifarm.com</code></div>
-            <div style={{ marginTop: 4 }}>Password: <code>Password123!</code></div>
-          </div>
-        </div>
       </div>
     </div>
   );
