@@ -5,9 +5,10 @@ import { TAMIL_NADU_LOCATIONS } from '../../lib/locationData';
 
 const FarmerProfile = () => {
   const { user, updateUser } = useAuthStore();
-  const [form, setForm] = useState({ name: '', phone: '', village: '', district: '', state: 'Tamil Nadu' });
+  const [form, setForm] = useState({ name: '', phone: '', subDistrict: '', village: '', district: '', state: 'Tamil Nadu' });
   const [loading, setLoading] = useState(false);
   const [locating, setLocating] = useState(false);
+  const [locationMsg, setLocationMsg] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
@@ -16,6 +17,7 @@ const FarmerProfile = () => {
       setForm({
         name: user.name || '',
         phone: user.phone || '',
+        subDistrict: user.subDistrict || '',
         village: user.village || '',
         district: user.district || '',
         state: user.state || 'Tamil Nadu'
@@ -29,49 +31,89 @@ const FarmerProfile = () => {
       return;
     }
     setLocating(true);
+    setLocationMsg('');
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
       try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1&accept-language=en`,
+          { headers: { 'Accept-Language': 'en' } }
+        );
         const data = await res.json();
         if (data && data.address) {
           const addr = data.address;
           const stateName = addr.state || 'Tamil Nadu';
           
           let detectedDistrict = '';
-          const addressText = JSON.stringify(addr).toLowerCase();
-          for (const d of Object.keys(TAMIL_NADU_LOCATIONS)) {
-            if (addressText.includes(d.toLowerCase())) {
+          const districtKeys = Object.keys(TAMIL_NADU_LOCATIONS);
+          const rawDistrict = addr.state_district || addr.county || addr.city || '';
+          for (const d of districtKeys) {
+            if (rawDistrict.toLowerCase().includes(d.toLowerCase()) ||
+                d.toLowerCase().includes(rawDistrict.toLowerCase())) {
               detectedDistrict = d;
               break;
             }
           }
-          
-          let detectedTaluk = '';
-          if (detectedDistrict) {
-            for (const t of TAMIL_NADU_LOCATIONS[detectedDistrict]) {
-              if (addressText.includes(t.toLowerCase())) {
-                detectedTaluk = t;
+          if (!detectedDistrict) {
+            const allAddrText = Object.values(addr).join(' ').toLowerCase();
+            for (const d of districtKeys) {
+              if (allAddrText.includes(d.toLowerCase())) {
+                detectedDistrict = d;
                 break;
               }
             }
           }
           
-          const talukName = detectedTaluk || TAMIL_NADU_LOCATIONS[detectedDistrict]?.[0] || '';
+          let detectedSubDistrict = '';
+          if (detectedDistrict) {
+            const taluks = TAMIL_NADU_LOCATIONS[detectedDistrict] || [];
+            const rawSubDistrict =
+              addr.suburb || addr.city_district || addr.municipality ||
+              addr.county || addr.town || addr.village || '';
+            for (const t of taluks) {
+              if (rawSubDistrict.toLowerCase().includes(t.toLowerCase()) ||
+                  t.toLowerCase().includes(rawSubDistrict.toLowerCase())) {
+                detectedSubDistrict = t;
+                break;
+              }
+            }
+            if (!detectedSubDistrict) {
+              const allAddrText = Object.values(addr).join(' ').toLowerCase();
+              for (const t of taluks) {
+                if (allAddrText.includes(t.toLowerCase())) {
+                  detectedSubDistrict = t;
+                  break;
+                }
+              }
+            }
+            if (!detectedSubDistrict) {
+              detectedSubDistrict = taluks[0] || '';
+            }
+          }
           
+          const detectedVillage =
+            addr.village || addr.hamlet || addr.suburb ||
+            addr.neighbourhood || addr.quarter || addr.town || '';
+          
+          const newDistrict = detectedDistrict || form.district;
+          const newSubDistrict = detectedSubDistrict || form.subDistrict;
+          const newVillage = detectedVillage || form.village;
+
           setForm(f => ({
             ...f,
             state: stateName,
-            district: detectedDistrict || f.district,
-            village: talukName || f.village
+            district: newDistrict,
+            subDistrict: newSubDistrict,
+            village: newVillage
           }));
 
-          // Immediately save coordinates in the backend
+          // Immediately save coordinates and location details in the backend
           const saveRes = await api.put('/users/me', {
             latitude,
             longitude,
-            district: detectedDistrict || form.district,
-            village: talukName || form.village,
+            district: newDistrict,
+            subDistrict: newSubDistrict,
+            village: newVillage,
             state: stateName
           });
           updateUser(saveRes.data.data);
@@ -80,12 +122,17 @@ const FarmerProfile = () => {
         }
       } catch (err) {
         console.error("Geocoding failed:", err);
+        setLocationMsg('⚠️ Could not resolve address.');
       } finally {
         setLocating(false);
       }
     }, (err) => {
       alert(`Could not fetch live location: ${err.message}`);
       setLocating(false);
+    }, {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 0
     });
   };
 
@@ -133,7 +180,7 @@ const FarmerProfile = () => {
             
             <div className="col-md-6">
               <label className="form-label-custom">District</label>
-              <select className="form-control-custom" value={form.district} onChange={e => setForm(f => ({ ...f, district: e.target.value, village: '' }))}>
+              <select className="form-control-custom" value={form.district} onChange={e => setForm(f => ({ ...f, district: e.target.value, subDistrict: '', village: '' }))}>
                 <option value="">Select district</option>
                 {Object.keys(TAMIL_NADU_LOCATIONS).map(d => <option key={d} value={d}>{d}</option>)}
               </select>
@@ -141,10 +188,21 @@ const FarmerProfile = () => {
             
             <div className="col-md-6">
               <label className="form-label-custom">Sub-district / Taluk</label>
-              <select className="form-control-custom" value={form.village} onChange={e => setForm(f => ({ ...f, village: e.target.value }))} disabled={!form.district}>
+              <select className="form-control-custom" value={form.subDistrict} onChange={e => setForm(f => ({ ...f, subDistrict: e.target.value }))} disabled={!form.district}>
                 <option value="">Select sub-district</option>
                 {taluks.map(t => <option key={t} value={t}>{t}</option>)}
               </select>
+            </div>
+
+            <div className="col-12">
+              <label className="form-label-custom">Village *</label>
+              <input
+                className="form-control-custom"
+                placeholder="Enter your village name"
+                value={form.village}
+                onChange={e => setForm(f => ({ ...f, village: e.target.value }))}
+                required
+              />
             </div>
 
             <div className="col-12"><label className="form-label-custom">State</label><input className="form-control-custom" value={form.state} onChange={e => setForm(f => ({ ...f, state: e.target.value }))} /></div>
@@ -158,6 +216,7 @@ const FarmerProfile = () => {
               >
                 📍 {locating ? 'Locating...' : 'Update Live Location'}
               </button>
+              {locationMsg && <span style={{ marginLeft: 10, fontSize: '0.8rem', color: 'var(--text-muted)' }}>{locationMsg}</span>}
             </div>
           </div>
           <button type="submit" className="btn-primary-custom mt-3" disabled={loading}>{loading ? '⏳ Saving...' : '💾 Save Changes'}</button>

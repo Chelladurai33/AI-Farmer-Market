@@ -26,6 +26,7 @@ const registerSchema = z.object({
   password: z.string().min(8, 'Password must be at least 8 characters'),
   role: z.enum(['FARMER', 'BUYER']).default('BUYER'),
   phone: z.string().optional(),
+  subDistrict: z.string().optional(),
   village: z.string().optional(),
   district: z.string().optional(),
   state: z.string().optional(),
@@ -44,7 +45,7 @@ const register = async (req, res, next) => {
     if (!result.success) {
       return sendValidationError(res, result.error.flatten().fieldErrors);
     }
-    const { name, email, password, role, phone, village, district, state, latitude, longitude } = result.data;
+    const { name, email, password, role, phone, subDistrict, village, district, state, latitude, longitude } = result.data;
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
@@ -53,7 +54,7 @@ const register = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = await prisma.user.create({
-      data: { name, email, password: hashedPassword, role, phone, village, district, state, latitude, longitude },
+      data: { name, email, password: hashedPassword, role, phone, subDistrict, village, district, state, latitude, longitude },
       select: { id: true, name: true, email: true, role: true, createdAt: true },
     });
 

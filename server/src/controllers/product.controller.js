@@ -12,6 +12,7 @@ const productSchema = z.object({
   unit: z.string().min(1),
   expectedPrice: z.coerce.number().positive(),
   harvestDate: z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date format' }),
+  subDistrict: z.string().optional(),
   village: z.string().transform(val => val.trim() || 'N/A'),
   district: z.string().min(1),
   state: z.string().transform(val => val.trim() || 'Tamil Nadu'),

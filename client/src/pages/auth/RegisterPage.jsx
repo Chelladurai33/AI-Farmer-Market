@@ -8,73 +8,166 @@ const RegisterPage = () => {
   const [form, setForm] = useState({
     name: '', email: '', password: '', confirmPassword: '',
     role: searchParams.get('role') || 'BUYER',
-    phone: '', district: '', state: 'Tamil Nadu', village: '',
+    phone: '', district: '', subDistrict: '', village: '',
+    state: 'Tamil Nadu',
     latitude: null, longitude: null
   });
   const [error, setError] = useState('');
   const [locating, setLocating] = useState(false);
+  const [locationMsg, setLocationMsg] = useState('');
   const { register, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
-  // Reset village if district changes
+  // Reset sub-district and village if district changes
   useEffect(() => {
-    setForm(f => ({ ...f, village: '' }));
+    setForm(f => ({ ...f, subDistrict: '', village: '' }));
   }, [form.district]);
 
   const handleLiveLocation = () => {
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported by your browser");
+      alert('Geolocation is not supported by your browser');
       return;
     }
+
     setLocating(true);
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      const { latitude, longitude } = pos.coords;
-      try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
-        const data = await res.json();
-        if (data && data.address) {
-          const addr = data.address;
-          const stateName = addr.state || 'Tamil Nadu';
-          
-          let detectedDistrict = '';
-          const addressText = JSON.stringify(addr).toLowerCase();
-          for (const d of Object.keys(TAMIL_NADU_LOCATIONS)) {
-            if (addressText.includes(d.toLowerCase())) {
-              detectedDistrict = d;
-              break;
-            }
-          }
-          
-          let detectedTaluk = '';
-          if (detectedDistrict) {
-            for (const t of TAMIL_NADU_LOCATIONS[detectedDistrict]) {
-              if (addressText.includes(t.toLowerCase())) {
-                detectedTaluk = t;
+    setLocationMsg('');
+
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude, longitude, accuracy } = pos.coords;
+        try {
+          // Use Nominatim reverse geocoding with proper headers
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1&accept-language=en`,
+            { headers: { 'Accept-Language': 'en' } }
+          );
+          const data = await res.json();
+
+          if (data && data.address) {
+            const addr = data.address;
+
+            // Nominatim fields for Tamil Nadu:
+            // state_district → District, county → District (fallback)
+            // suburb / city_district / town / village / hamlet → locality
+            // state → State name
+
+            const stateName = addr.state || 'Tamil Nadu';
+
+            // --- Detect District ---
+            // Nominatim uses "state_district" or "county" for district in India
+            const rawDistrict = addr.state_district || addr.county || addr.city || '';
+            let detectedDistrict = '';
+
+            // Try exact match first (case-insensitive)
+            const districtKeys = Object.keys(TAMIL_NADU_LOCATIONS);
+            for (const d of districtKeys) {
+              if (rawDistrict.toLowerCase().includes(d.toLowerCase()) ||
+                  d.toLowerCase().includes(rawDistrict.toLowerCase())) {
+                detectedDistrict = d;
                 break;
               }
             }
+
+            // Fallback: search all address fields for any known district
+            if (!detectedDistrict) {
+              const allAddrText = Object.values(addr).join(' ').toLowerCase();
+              for (const d of districtKeys) {
+                if (allAddrText.includes(d.toLowerCase())) {
+                  detectedDistrict = d;
+                  break;
+                }
+              }
+            }
+
+            // --- Detect Sub-district / Taluk ---
+            // Nominatim uses "suburb", "city_district", "county" or "municipality"
+            const rawSubDistrict =
+              addr.suburb || addr.city_district || addr.municipality ||
+              addr.county || addr.town || addr.village || '';
+
+            let detectedSubDistrict = '';
+            if (detectedDistrict) {
+              const taluks = TAMIL_NADU_LOCATIONS[detectedDistrict] || [];
+              for (const t of taluks) {
+                if (rawSubDistrict.toLowerCase().includes(t.toLowerCase()) ||
+                    t.toLowerCase().includes(rawSubDistrict.toLowerCase())) {
+                  detectedSubDistrict = t;
+                  break;
+                }
+              }
+
+              // Fallback: search full address for any known taluk
+              if (!detectedSubDistrict) {
+                const allAddrText = Object.values(addr).join(' ').toLowerCase();
+                for (const t of taluks) {
+                  if (allAddrText.includes(t.toLowerCase())) {
+                    detectedSubDistrict = t;
+                    break;
+                  }
+                }
+              }
+
+              // Last resort: pick first taluk of the district
+              if (!detectedSubDistrict) {
+                detectedSubDistrict = taluks[0] || '';
+              }
+            }
+
+            // --- Detect Village / Locality ---
+            // Prioritize the actual village name first
+            const detectedVillage =
+              addr.village || addr.hamlet || addr.suburb ||
+              addr.neighbourhood || addr.quarter || addr.town || '';
+
+            setForm(f => ({
+              ...f,
+              state: stateName,
+              district: detectedDistrict || f.district,
+              subDistrict: detectedSubDistrict || f.subDistrict,
+              village: detectedVillage || f.village,
+              latitude,
+              longitude
+            }));
+
+            const accuracyText = accuracy < 50
+              ? '✅ High accuracy'
+              : accuracy < 200
+              ? '⚠️ Moderate accuracy'
+              : '❌ Low accuracy';
+            setLocationMsg(`${accuracyText} (±${Math.round(accuracy)}m) — ${data.display_name?.split(',').slice(0, 3).join(', ')}`);
           }
-          
-          const talukName = detectedTaluk || TAMIL_NADU_LOCATIONS[detectedDistrict]?.[0] || '';
-          
-          setForm(f => ({
-            ...f,
-            state: stateName,
-            district: detectedDistrict || f.district,
-            village: talukName || f.village,
-            latitude,
-            longitude
-          }));
+        } catch (err) {
+          console.error('Geocoding failed:', err);
+          setLocationMsg('⚠️ Could not resolve address. Coordinates saved.');
+          setForm(f => ({ ...f, latitude, longitude }));
+        } finally {
+          setLocating(false);
         }
-      } catch (err) {
-        console.error("Geocoding failed:", err);
-      } finally {
+      },
+      (err) => {
         setLocating(false);
+        let msg = '';
+        switch (err.code) {
+          case err.PERMISSION_DENIED:
+            msg = 'Location permission denied. Please allow location access in your browser settings and try again.';
+            break;
+          case err.POSITION_UNAVAILABLE:
+            msg = 'Location information is unavailable. Please try again.';
+            break;
+          case err.TIMEOUT:
+            msg = 'Location request timed out. Please try again.';
+            break;
+          default:
+            msg = `Location error: ${err.message}`;
+        }
+        alert(msg);
+      },
+      {
+        enableHighAccuracy: true,   // Request GPS-level accuracy
+        timeout: 15000,             // Wait up to 15s
+        maximumAge: 0               // Always get fresh location
       }
-    }, (err) => {
-      alert(`Could not fetch live location: ${err.message}`);
-      setLocating(false);
-    });
+    );
   };
 
   const handleSubmit = async (e) => {
@@ -89,8 +182,10 @@ const RegisterPage = () => {
     try {
       const { user } = await register({
         name: form.name, email: form.email, password: form.password,
-        role: form.role, phone: form.phone, district: form.district,
-        state: form.state, village: form.village,
+        role: form.role, phone: form.phone,
+        district: form.district,
+        state: form.state,
+        village: form.village,
         latitude: form.latitude ? parseFloat(form.latitude) : undefined,
         longitude: form.longitude ? parseFloat(form.longitude) : undefined
       });
@@ -169,20 +264,61 @@ const RegisterPage = () => {
               <>
                 <div className="col-12">
                   <label className="form-label-custom">Sub-district / Taluk *</label>
-                  <select className="form-control-custom" value={form.village} onChange={e => setForm(f => ({ ...f, village: e.target.value }))} required disabled={!form.district}>
-                    <option value="">Select sub-district</option>
+                  <select
+                    className="form-control-custom"
+                    value={form.subDistrict}
+                    onChange={e => setForm(f => ({ ...f, subDistrict: e.target.value }))}
+                    required
+                    disabled={!form.district}
+                  >
+                    <option value="">Select sub-district / taluk</option>
                     {taluks.map(t => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </div>
-                <div className="col-12 text-end">
+
+                <div className="col-12">
+                  <label className="form-label-custom">Village *</label>
+                  <input
+                    className="form-control-custom"
+                    placeholder="Enter your village name"
+                    value={form.village}
+                    onChange={e => setForm(f => ({ ...f, village: e.target.value }))}
+                    required
+                  />
+                </div>
+
+                {/* Fetch Live Location */}
+                <div className="col-12">
                   <button
                     type="button"
                     onClick={handleLiveLocation}
                     disabled={locating}
-                    style={{ padding: '6px 12px', fontSize: '0.8rem', background: 'var(--gradient-primary)', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 6, fontWeight: 600 }}
+                    style={{
+                      width: '100%', padding: '10px 16px', fontSize: '0.875rem',
+                      background: locating ? 'var(--border)' : 'var(--gradient-primary)',
+                      color: 'white', border: 'none', borderRadius: 8,
+                      cursor: locating ? 'not-allowed' : 'pointer',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      gap: 8, fontWeight: 600, transition: 'all 0.2s'
+                    }}
                   >
-                    📍 {locating ? 'Locating...' : 'Fetch Live Location'}
+                    <span style={{ fontSize: '1.1rem' }}>📍</span>
+                    {locating ? 'Detecting your location…' : 'Auto-fill via Live Location'}
                   </button>
+                  {locationMsg && (
+                    <p style={{
+                      marginTop: '0.5rem', fontSize: '0.78rem',
+                      color: locationMsg.startsWith('✅') ? '#16a34a' : locationMsg.startsWith('⚠️') ? '#d97706' : '#dc2626',
+                      textAlign: 'center'
+                    }}>
+                      {locationMsg}
+                    </p>
+                  )}
+                  {(form.latitude && form.longitude) && (
+                    <p style={{ marginTop: '0.25rem', fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center' }}>
+                      📌 {form.latitude.toFixed(5)}, {form.longitude.toFixed(5)}
+                    </p>
+                  )}
                 </div>
               </>
             )}

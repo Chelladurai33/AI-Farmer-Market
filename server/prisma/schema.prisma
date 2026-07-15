@@ -16,12 +16,13 @@ model User {
   password   String
   role       Role    @default(BUYER)
   phone      String?
-  avatarUrl  String?
-  village    String?
-  district   String?
-  state      String?
-  latitude   Float?
-  longitude  Float?
+  avatarUrl   String?
+  subDistrict String?
+  village     String?
+  district    String?
+  state       String?
+  latitude    Float?
+  longitude   Float?
   isVerified Boolean @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -62,6 +63,7 @@ model Product {
   unit          String
   expectedPrice Float
   harvestDate   DateTime
+  subDistrict   String?
   village       String
   district      String
   state         String

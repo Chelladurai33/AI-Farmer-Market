@@ -8,6 +8,7 @@ const prisma = require('../utils/prisma');
 const updateSchema = z.object({
   name: z.string().min(2).optional(),
   phone: z.string().optional(),
+  subDistrict: z.string().optional(),
   village: z.string().optional(),
   district: z.string().optional(),
   state: z.string().optional(),
@@ -21,7 +22,7 @@ const getMe = async (req, res, next) => {
       where: { id: req.user.id },
       select: {
         id: true, name: true, email: true, role: true,
-        phone: true, avatarUrl: true, village: true,
+        phone: true, avatarUrl: true, subDistrict: true, village: true,
         district: true, state: true, latitude: true, longitude: true,
         isVerified: true, createdAt: true,
       },
@@ -44,7 +45,7 @@ const updateMe = async (req, res, next) => {
       data: result.data,
       select: {
         id: true, name: true, email: true, role: true,
-        phone: true, avatarUrl: true, village: true,
+        phone: true, avatarUrl: true, subDistrict: true, village: true,
         district: true, state: true, latitude: true, longitude: true,
         isVerified: true,
       },
