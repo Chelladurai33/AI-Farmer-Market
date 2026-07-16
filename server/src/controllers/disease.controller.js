@@ -47,7 +47,8 @@ const analyzeDisease = async (req, res, next) => {
       analysis = await geminiService.callGeminiVision(
         req.file.buffer,
         req.file.mimetype,
-        DISEASE_SYSTEM_PROMPT
+        DISEASE_SYSTEM_PROMPT,
+        req.file.originalname
       );
     } catch {
       analysis = {

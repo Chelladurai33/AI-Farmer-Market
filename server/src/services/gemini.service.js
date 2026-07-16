@@ -19,9 +19,11 @@ const getGenAI = () => {
    MOCK GENERATOR FALLBACKS
    ============================================ */
 
-const getMockVisionAnalysis = () => {
-  const mockAnalyses = [
-    {
+const getMockVisionAnalysis = (originalName = '') => {
+  const name = (originalName || '').toLowerCase();
+  
+  const mockAnalyses = {
+    tomato: {
       cropName: "Tomato",
       isHealthy: false,
       diseaseName: "Early Blight",
@@ -35,7 +37,7 @@ const getMockVisionAnalysis = () => {
       prevention: "Practice crop rotation, water at the base of the plant rather than overhead, and space plants for air circulation.",
       recoveryTime: "10-14 days"
     },
-    {
+    rice: {
       cropName: "Rice (Paddy)",
       isHealthy: false,
       diseaseName: "Rice Blast",
@@ -49,7 +51,7 @@ const getMockVisionAnalysis = () => {
       prevention: "Use resistant crop varieties, destroy infected crop residue after harvest, and maintain optimal water level.",
       recoveryTime: "2-3 weeks"
     },
-    {
+    cotton: {
       cropName: "Cotton",
       isHealthy: false,
       diseaseName: "Cotton Leaf Curl Virus",
@@ -63,7 +65,7 @@ const getMockVisionAnalysis = () => {
       prevention: "Plant virus-resistant cotton hybrids, remove weed hosts near the field, and manage whitefly populations early.",
       recoveryTime: "Not curable (focus on vector control)"
     },
-    {
+    spinach: {
       cropName: "Spinach",
       isHealthy: true,
       diseaseName: null,
@@ -76,10 +78,33 @@ const getMockVisionAnalysis = () => {
       organicAlt: "Not applicable.",
       prevention: "Maintain consistent soil moisture, weed regularly, and mulch to keep leaves clean of soil splashes.",
       recoveryTime: "Healthy"
+    },
+    chilli: {
+      cropName: "Chilli",
+      isHealthy: false,
+      diseaseName: "Chilli Leaf Curl",
+      confidence: 0.91,
+      symptoms: "Leaves curl upward, become smaller, puckered and accumulate in clusters. Plant growth is stunted with close internodes.",
+      causes: "Chilli Leaf Curl Virus (ChiLCV), transmitted by whiteflies (Bemisia tabaci) under warm and dry conditions.",
+      treatment: "Uproot and destroy infected plants immediately. Avoid planting near infected host crops.",
+      fertilizer: "Use balanced NPK fertilizers and supplement with micro-nutrients to boost plant vigor.",
+      pesticide: "Imidacloprid or Diafenthiuron to control whitefly populations.",
+      organicAlt: "Spray neem oil (5ml/L) with soap solution or use yellow sticky traps to control whitefly vector.",
+      prevention: "Use insect-proof nurseries, raise border crops like maize/sorghum, and control weed hosts.",
+      recoveryTime: "Not curable for affected plants (focus on preventing spread)"
     }
-  ];
-  const randomIndex = Math.floor(Math.random() * mockAnalyses.length);
-  return mockAnalyses[randomIndex];
+  };
+
+  if (name.includes('tomato')) return mockAnalyses.tomato;
+  if (name.includes('rice') || name.includes('paddy')) return mockAnalyses.rice;
+  if (name.includes('cotton')) return mockAnalyses.cotton;
+  if (name.includes('spinach')) return mockAnalyses.spinach;
+  if (name.includes('chilli') || name.includes('chili') || name.includes('pepper')) return mockAnalyses.chilli;
+
+  // Fallback to random if no keyword match
+  const keys = Object.keys(mockAnalyses);
+  const randomIndex = Math.floor(Math.random() * keys.length);
+  return mockAnalyses[keys[randomIndex]];
 };
 
 const getMockPricePrediction = (userPrompt) => {
@@ -183,9 +208,9 @@ const callGeminiJSON = async (systemPrompt, userPrompt, retries = 2) => {
 /**
  * Call Gemini Vision with an image buffer and structured output prompt.
  */
-const callGeminiVision = async (imageBuffer, mimeType, prompt, retries = 2) => {
+const callGeminiVision = async (imageBuffer, mimeType, prompt, originalName = '', retries = 2) => {
   if (!hasValidKey()) {
-    return getMockVisionAnalysis();
+    return getMockVisionAnalysis(originalName);
   }
 
   const imageData = {
