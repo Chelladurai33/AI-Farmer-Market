@@ -9,6 +9,7 @@ const DiseaseDetection = () => {
   const [result, setResult] = useState(null);
   const [history, setHistory] = useState([]);
   const [error, setError] = useState('');
+  const [cropType, setCropType] = useState('');
   const fileRef = useRef();
 
   useEffect(() => {
@@ -37,6 +38,9 @@ const DiseaseDetection = () => {
     try {
       const formData = new FormData();
       formData.append('image', image);
+      if (cropType) {
+        formData.append('cropType', cropType);
+      }
       const res = await api.post('/disease-detection/analyze', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
       setResult(res.data.data);
       const hist = await api.get('/disease-detection/history');
@@ -60,12 +64,31 @@ const DiseaseDetection = () => {
           <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.25rem' }}>📷 Upload Leaf Photo</h3>
           {error && <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 'var(--radius-md)', padding: '0.75rem', marginBottom: '1rem', color: '#dc2626', fontSize: '0.875rem' }}>⚠️ {error}</div>}
 
+          <div style={{ marginBottom: '1.25rem' }}>
+            <label className="form-label-custom" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.875rem' }}>Crop Type (Optional)</label>
+            <select
+              className="form-control-custom"
+              value={cropType}
+              onChange={e => setCropType(e.target.value)}
+              style={{ width: '100%' }}
+            >
+              <option value="">Autodetect (Gemini AI)</option>
+              <option value="brinjal">Brinjal (Eggplant)</option>
+              <option value="chilli">Chilli</option>
+              <option value="tomato">Tomato</option>
+              <option value="rice">Rice (Paddy)</option>
+              <option value="cotton">Cotton</option>
+              <option value="spinach">Spinach</option>
+            </select>
+          </div>
+
           <div
             className={`drop-zone ${dragging ? 'dragging' : ''}`}
             onClick={() => fileRef.current?.click()}
             onDragOver={e => { e.preventDefault(); setDragging(true); }}
             onDragLeave={() => setDragging(false)}
             onDrop={handleDrop}
+            style={{ marginBottom: '1rem' }}
           >
             {preview ? (
               <img src={preview} alt="Uploaded leaf" style={{ maxWidth: '100%', maxHeight: 250, borderRadius: 8, objectFit: 'cover' }} />
@@ -83,7 +106,7 @@ const DiseaseDetection = () => {
             <button className="btn-primary-custom flex-fill" onClick={handleAnalyze} disabled={loading || !image}>
               {loading ? '🤖 Analyzing with AI...' : '🔬 Analyze Disease'}
             </button>
-            {image && <button onClick={() => { setImage(null); setPreview(''); setResult(null); }} className="btn-outline-custom">Clear</button>}
+            {image && <button onClick={() => { setImage(null); setPreview(''); setResult(null); setCropType(''); }} className="btn-outline-custom">Clear</button>}
           </div>
         </div>
 

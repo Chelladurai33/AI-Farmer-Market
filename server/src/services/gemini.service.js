@@ -92,6 +92,20 @@ const getMockVisionAnalysis = (originalName = '') => {
       organicAlt: "Spray neem oil (5ml/L) with soap solution or use yellow sticky traps to control whitefly vector.",
       prevention: "Use insect-proof nurseries, raise border crops like maize/sorghum, and control weed hosts.",
       recoveryTime: "Not curable for affected plants (focus on preventing spread)"
+    },
+    brinjal: {
+      cropName: "Brinjal (Eggplant)",
+      isHealthy: false,
+      diseaseName: "Cercospora Leaf Spot",
+      confidence: 0.89,
+      symptoms: "Circular or irregular leaf spots with brown centers and light margins, yellowing of older leaves, leaf dropping.",
+      causes: "Fungal pathogen Cercospora melongenae. Favored by high humidity, warm weather, and splashing water/rain.",
+      treatment: "Uproot and destroy heavily infected plants. Spray copper oxychloride (3g/L) or Carbendazim (1g/L) at 10-day intervals.",
+      fertilizer: "Apply balanced NPK fertilizer with additional potassium to boost plant immunity.",
+      pesticide: "Carbendazim 50% WP or Copper Oxychloride.",
+      organicAlt: "Spray neem oil formulation (5ml/L) mixed with mild soap solution or spray diluted garlic/ginger extract.",
+      prevention: "Avoid overhead irrigation, maintain optimum spacing, remove debris from previous harvests, and follow crop rotation.",
+      recoveryTime: "10-15 days"
     }
   };
 
@@ -100,6 +114,7 @@ const getMockVisionAnalysis = (originalName = '') => {
   if (name.includes('cotton')) return mockAnalyses.cotton;
   if (name.includes('spinach')) return mockAnalyses.spinach;
   if (name.includes('chilli') || name.includes('chili') || name.includes('pepper')) return mockAnalyses.chilli;
+  if (name.includes('brinjal') || name.includes('eggplant') || name.includes('aubergine')) return mockAnalyses.brinjal;
 
   // Fallback to random if no keyword match
   const keys = Object.keys(mockAnalyses);

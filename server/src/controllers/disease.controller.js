@@ -48,7 +48,7 @@ const analyzeDisease = async (req, res, next) => {
         req.file.buffer,
         req.file.mimetype,
         DISEASE_SYSTEM_PROMPT,
-        req.file.originalname
+        req.body.cropType ? `${req.body.cropType}_${req.file.originalname}` : req.file.originalname
       );
     } catch {
       analysis = {

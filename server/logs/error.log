@@ -747,3 +747,2095 @@ Unknown field `subDistrict` for select statement on model `User`. Available opti
     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
     at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
     at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:24:11 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 18:24:11 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 18:24:11 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 18:24:11 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 18:24:11 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:24:11 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:34:29 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 18:34:29 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 18:34:29 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 18:34:29 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 18:34:29 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c3861611-0851-415a-b32b-f1c5dc5a7e07"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c3861611-0851-415a-b32b-f1c5dc5a7e07"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:34:30 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c3861611-0851-415a-b32b-f1c5dc5a7e07"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c3861611-0851-415a-b32b-f1c5dc5a7e07"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:40:18 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:40:18 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:40:53 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:40:53 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:41:08 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:41:08 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:41:22 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:41:22 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:43:54 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 18:43:54 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 19:34:07 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 19:34:07 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 19:34:07 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 19:34:07 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 19:34:07 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 19:34:07 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "274754c0-f38b-4d6d-9a67-d915d32f6a52"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 19:35:29 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 19:35:29 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 19:35:29 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 19:35:29 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-16 19:35:29 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 19:35:29 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 19:38:29 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
+2026-07-16 19:38:29 [31merror[39m: Error: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:36
+
+  18 
+  19 const getMe = async (req, res, next) => {
+  20   try {
+→ 21     const user = await prisma.user.findUnique({
+           where: {
+             id: "c88dd0e3-1889-48df-b45c-cc1e560871c0"
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             phone: true,
+             avatarUrl: true,
+             subDistrict: true,
+             ~~~~~~~~~~~
+             village: true,
+             district: true,
+             state: true,
+             latitude: true,
+             longitude: true,
+             isVerified: true,
+             createdAt: true,
+         ?   password?: true,
+         ?   updatedAt?: true,
+         ?   products?: true,
+         ?   ordersAsBuyer?: true,
+         ?   reviews?: true,
+         ?   wishlist?: true,
+         ?   notifications?: true,
+         ?   priceQueries?: true,
+         ?   diseaseChecks?: true,
+         ?   storageBookings?: true,
+         ?   sentMessages?: true,
+         ?   receivedMessages?: true,
+         ?   _count?: true
+           }
+         })
+
+Unknown field `subDistrict` for select statement on model `User`. Available options are marked with ?.
+    at ar (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:10:1374)
+    at zr.handleRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7929)
+    at zr.handleAndLogRequestError (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7581)
+    at zr.request (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:65:7288)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\@prisma\client\runtime\client.js:75:6862)
+    at async getMe (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\controllers\user.controller.js:21:18)
