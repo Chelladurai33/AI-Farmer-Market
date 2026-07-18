@@ -168,12 +168,18 @@ model DemandForecast {
   createdAt   DateTime @default(now())
 }
 
+enum StorageType {
+  COLD
+  NORMAL
+}
+
 model ColdStorage {
-  id             String   @id @default(uuid())
+  id             String      @id @default(uuid())
   name           String
   address        String
   latitude       Float
   longitude      Float
+  storageType    StorageType @default(COLD)
   capacityTons   Float
   supportedCrops String[]
   minTemp        Float
@@ -181,7 +187,7 @@ model ColdStorage {
   rentPerDay     Float
   phone          String
   operatingHours String
-  createdAt      DateTime @default(now())
+  createdAt      DateTime   @default(now())
 
   bookings StorageBooking[]
 }
@@ -199,6 +205,21 @@ model StorageBooking {
   totalCost    Float
   status       String      @default("PENDING")
   createdAt    DateTime    @default(now())
+}
+
+model SolarDryingPlant {
+  id               String   @id @default(uuid())
+  name             String
+  address          String
+  latitude         Float
+  longitude        Float
+  capacityKgPerDay Float
+  supportedProducts String[]
+  dryingMethod     String   @default("Solar")
+  phone            String
+  operatingHours   String
+  rentPerDay       Float
+  createdAt        DateTime @default(now())
 }
 
 model WeatherLog {

@@ -1,5 +1,6 @@
 
-const { sendSuccess, sendError } = require('../utils/apiResponse');
+const { z } = require('zod');
+const { sendSuccess, sendError, sendValidationError } = require('../utils/apiResponse');
 
 const prisma = require('../utils/prisma');
 
@@ -128,6 +129,74 @@ const deleteColdStorage = async (req, res, next) => {
   }
 };
 
+const createAdminColdStorage = async (req, res, next) => {
+  try {
+    const schema = z.object({
+      name: z.string().min(2),
+      address: z.string().min(5),
+      latitude: z.number(),
+      longitude: z.number(),
+      storageType: z.enum(['COLD', 'NORMAL']).default('COLD'),
+      capacityTons: z.number().positive(),
+      supportedCrops: z.array(z.string()).min(1),
+      minTemp: z.number(),
+      maxTemp: z.number(),
+      rentPerDay: z.number().positive(),
+      phone: z.string().min(10),
+      operatingHours: z.string().min(3),
+    });
+
+    const result = schema.safeParse(req.body);
+    if (!result.success) return sendValidationError(res, result.error.flatten().fieldErrors);
+
+    if (result.data.minTemp >= result.data.maxTemp) {
+      return sendError(res, 'Min temperature must be less than Max temperature', 400);
+    }
+
+    const storage = await prisma.coldStorage.create({ data: result.data });
+    return sendSuccess(res, storage, 201, 'Storage created successfully');
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ---- Solar Drying Plants ----
+
+const getSolarDryingPlants = async (req, res, next) => {
+  try {
+    const plants = await prisma.solarDryingPlant.findMany({ orderBy: { createdAt: 'desc' } });
+    return sendSuccess(res, plants);
+  } catch (err) { next(err); }
+};
+
+const createSolarDryingPlant = async (req, res, next) => {
+  try {
+    const schema = z.object({
+      name: z.string().min(2),
+      address: z.string().min(5),
+      latitude: z.number(),
+      longitude: z.number(),
+      capacityKgPerDay: z.number().positive(),
+      supportedProducts: z.array(z.string()).min(1),
+      dryingMethod: z.string().default('Solar'),
+      phone: z.string().min(10),
+      operatingHours: z.string().min(3),
+      rentPerDay: z.number().positive(),
+    });
+    const result = schema.safeParse(req.body);
+    if (!result.success) return sendValidationError(res, result.error.flatten().fieldErrors);
+    const plant = await prisma.solarDryingPlant.create({ data: result.data });
+    return sendSuccess(res, plant, 201, 'Solar drying plant created successfully');
+  } catch (err) { next(err); }
+};
+
+const deleteSolarDryingPlant = async (req, res, next) => {
+  try {
+    await prisma.solarDryingPlant.delete({ where: { id: req.params.id } });
+    return sendSuccess(res, null, 200, 'Solar drying plant deleted');
+  } catch (err) { next(err); }
+};
+
 const getReports = async (req, res, next) => {
   try {
     const [totalRevenue, aiUsage, userGrowth] = await Promise.all([
@@ -145,4 +214,4 @@ const getReports = async (req, res, next) => {
   }
 };
 
-module.exports = { getStats, getFarmers, getBuyers, getAdminOrders, verifyUser, suspendUser, manageColdStorages, getReports, updateColdStorage, deleteColdStorage };
+module.exports = { getStats, getFarmers, getBuyers, getAdminOrders, verifyUser, suspendUser, manageColdStorages, getReports, updateColdStorage, deleteColdStorage, createAdminColdStorage, getSolarDryingPlants, createSolarDryingPlant, deleteSolarDryingPlant };

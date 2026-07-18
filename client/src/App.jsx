@@ -26,6 +26,7 @@ import FarmerOrders from './pages/farmer/FarmerOrders';
 import PricePrediction from './pages/farmer/PricePrediction';
 import DiseaseDetection from './pages/farmer/DiseaseDetection';
 import ColdStorage from './pages/farmer/ColdStorage';
+import DryingPlant from './pages/farmer/DryingPlant';
 import WeatherDashboard from './pages/farmer/WeatherDashboard';
 import FarmerProfile from './pages/farmer/FarmerProfile';
 import DemandForecast from './pages/farmer/DemandForecast';
@@ -44,6 +45,7 @@ import AdminFarmers from './pages/admin/AdminFarmers';
 import AdminBuyers from './pages/admin/AdminBuyers';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminColdStorages from './pages/admin/AdminColdStorages';
+import AdminDryingPlants from './pages/admin/AdminDryingPlants';
 import AdminReports from './pages/admin/AdminReports';
 
 // Components
@@ -85,6 +87,7 @@ function App() {
             <Route path="/farmer/demand-forecast" element={<DemandForecast />} />
             <Route path="/farmer/disease-detection" element={<DiseaseDetection />} />
             <Route path="/farmer/cold-storage" element={<ColdStorage />} />
+            <Route path="/farmer/drying-plant" element={<DryingPlant />} />
             <Route path="/farmer/weather" element={<WeatherDashboard />} />
             <Route path="/farmer/profile" element={<FarmerProfile />} />
           </Route>
@@ -110,6 +113,7 @@ function App() {
             <Route path="/admin/buyers" element={<AdminBuyers />} />
             <Route path="/admin/orders" element={<AdminOrders />} />
             <Route path="/admin/cold-storages" element={<AdminColdStorages />} />
+            <Route path="/admin/drying-plants" element={<AdminDryingPlants />} />
             <Route path="/admin/reports" element={<AdminReports />} />
           </Route>
         </Route>

@@ -23,6 +23,10 @@ const requireAuth = async (req, res, next) => {
       throw new AppError('User not found. Please log in again.', 401);
     }
 
+    if (!user.isVerified) {
+      throw new AppError('Your account has been suspended or is not verified yet.', 403);
+    }
+
     req.user = user;
     next();
   } catch (err) {

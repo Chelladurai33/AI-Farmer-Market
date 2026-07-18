@@ -91,6 +91,10 @@ const login = async (req, res, next) => {
       return sendError(res, 'Invalid email or password', 401);
     }
 
+    if (!user.isVerified) {
+      return sendError(res, 'Your account is suspended or unverified.', 403);
+    }
+
     const { accessToken, refreshToken } = generateTokens(user.id, user.role);
 
     res.cookie('refreshToken', refreshToken, {
@@ -122,11 +126,15 @@ const refreshToken = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
-      select: { id: true, role: true },
+      select: { id: true, role: true, isVerified: true },
     });
 
     if (!user) {
       return sendError(res, 'User not found', 401);
+    }
+
+    if (!user.isVerified) {
+      return sendError(res, 'Your account is suspended or unverified.', 403);
     }
 
     const { accessToken, refreshToken: newRefreshToken } = generateTokens(user.id, user.role);

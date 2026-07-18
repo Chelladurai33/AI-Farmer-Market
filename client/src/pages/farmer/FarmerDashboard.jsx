@@ -31,6 +31,7 @@ const FarmerDashboard = () => {
         <Link to="/farmer/products/add" className="btn-primary-custom" style={{ fontSize: '0.875rem' }}>+ Add Crop</Link>
         <Link to="/farmer/price-prediction" className="btn-outline-custom" style={{ fontSize: '0.875rem' }}>📈 Price Prediction</Link>
         <Link to="/farmer/disease-detection" className="btn-outline-custom" style={{ fontSize: '0.875rem' }}>🔬 Detect Disease</Link>
+        <Link to="/farmer/drying-plant" className="btn-outline-custom" style={{ fontSize: '0.875rem' }}>☀️ Drying Plant</Link>
         <Link to="/farmer/weather" className="btn-outline-custom" style={{ fontSize: '0.875rem' }}>🌤️ Weather</Link>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
@@ -73,7 +74,8 @@ const FarmerDashboard = () => {
           {[
             { icon: '📈', title: 'Price Prediction', path: '/farmer/price-prediction' },
             { icon: '🔬', title: 'Disease Detection', path: '/farmer/disease-detection' },
-            { icon: '❄️', title: 'Cold Storage', path: '/farmer/cold-storage' },
+            { icon: '🏭', title: 'Storage', path: '/farmer/cold-storage' },
+            { icon: '☀️', title: 'Drying Plant', path: '/farmer/drying-plant' },
             { icon: '📊', title: 'Demand Forecast', path: '/farmer/demand-forecast' },
           ].map(tool => (
             <Link key={tool.path} to={tool.path} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.6rem', borderRadius: 'var(--radius-md)', marginBottom: '0.4rem', textDecoration: 'none', color: 'var(--text-primary)', transition: 'all 0.2s' }}

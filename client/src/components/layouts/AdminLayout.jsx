@@ -7,7 +7,8 @@ const ADMIN_NAV = [
   { path: '/admin/farmers', icon: '👨‍🌾', label: 'Farmers' },
   { path: '/admin/buyers', icon: '🛒', label: 'Buyers' },
   { path: '/admin/orders', icon: '📦', label: 'Orders' },
-  { path: '/admin/cold-storages', icon: '❄️', label: 'Cold Storages' },
+  { path: '/admin/cold-storages', icon: '🏭', label: 'Storages' },
+  { path: '/admin/drying-plants', icon: '☀️', label: 'Drying Plants' },
   { path: '/admin/reports', icon: '📈', label: 'Reports' },
 ];
 

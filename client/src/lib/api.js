@@ -31,6 +31,12 @@ api.interceptors.response.use(
       original.url.includes('/auth/refresh')
     );
 
+    if (error.response?.status === 403) {
+      localStorage.removeItem('accessToken');
+      window.location.href = '/login';
+      return Promise.reject(error);
+    }
+
     if (error.response?.status === 401 && !original._retry && !isAuthRequest) {
       original._retry = true;
       try {

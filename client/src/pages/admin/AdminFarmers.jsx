@@ -45,8 +45,11 @@ const AdminFarmers = () => {
                 <td style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{new Date(f.createdAt).toLocaleDateString()}</td>
                 <td>
                   <div style={{ display: 'flex', gap: '0.4rem' }}>
-                    {!f.isVerified && <button onClick={() => verify(f.id)} style={{ padding: '3px 8px', borderRadius: 6, border: 'none', background: 'rgba(34,197,94,0.15)', color: '#16a34a', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600 }}>Verify</button>}
-                    <button onClick={() => suspend(f.id)} style={{ padding: '3px 8px', borderRadius: 6, border: 'none', background: 'rgba(239,68,68,0.15)', color: '#dc2626', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600 }}>Suspend</button>
+                    {f.isVerified ? (
+                      <button onClick={() => suspend(f.id)} style={{ padding: '3px 8px', borderRadius: 6, border: 'none', background: 'rgba(239,68,68,0.15)', color: '#dc2626', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600 }}>Suspend</button>
+                    ) : (
+                      <button onClick={() => verify(f.id)} style={{ padding: '3px 8px', borderRadius: 6, border: 'none', background: 'rgba(34,197,94,0.15)', color: '#16a34a', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600 }}>Verify</button>
+                    )}
                   </div>
                 </td>
               </tr>

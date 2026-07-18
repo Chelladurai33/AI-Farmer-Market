@@ -113,4 +113,29 @@ const bookStorage = async (req, res, next) => {
   }
 };
 
-module.exports = { getNearbyColdStorages, createColdStorage, bookStorage };
+const getNearbySolarDryingPlants = async (req, res, next) => {
+  try {
+    const { lat, lng, radius = 100 } = req.query;
+    if (!lat || !lng) return sendError(res, 'Latitude and longitude are required', 400);
+
+    const userLat = parseFloat(lat);
+    const userLng = parseFloat(lng);
+    const maxRadius = parseFloat(radius);
+
+    const plants = await prisma.solarDryingPlant.findMany();
+    const nearby = plants
+      .map(p => ({
+        ...p,
+        distance: parseFloat(getDistance(userLat, userLng, p.latitude, p.longitude).toFixed(2)),
+      }))
+      .filter(p => p.distance <= maxRadius);
+
+    nearby.sort((a, b) => a.distance - b.distance);
+
+    return sendSuccess(res, nearby);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getNearbyColdStorages, createColdStorage, bookStorage, getNearbySolarDryingPlants };

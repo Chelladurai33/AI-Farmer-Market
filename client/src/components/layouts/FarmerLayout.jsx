@@ -9,7 +9,8 @@ const FARMER_NAV = [
   { path: '/farmer/price-prediction', icon: '📈', label: 'Price Prediction' },
   { path: '/farmer/demand-forecast', icon: '📊', label: 'Demand Forecast' },
   { path: '/farmer/disease-detection', icon: '🔬', label: 'Disease Detection' },
-  { path: '/farmer/cold-storage', icon: '❄️', label: 'Cold Storage' },
+  { path: '/farmer/cold-storage', icon: '🏭', label: 'Storage' },
+  { path: '/farmer/drying-plant', icon: '☀️', label: 'Drying Plant' },
   { path: '/farmer/weather', icon: '🌤️', label: 'Weather' },
   { path: '/farmer/profile', icon: '👤', label: 'Profile' },
 ];

@@ -1,4 +1,5 @@
-require('dotenv').config();
+require('dotenv').config(); // Trigger restart for Prisma client update HOT removed / user verified updates v3
+// Trigger nodemon restart
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
