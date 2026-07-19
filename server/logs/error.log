@@ -36572,3 +36572,63 @@ TokenExpiredError: jwt expired
     at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
     at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
     at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-18 22:48:18 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-19 21:39:01 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-19 21:39:01 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-19 21:39:01 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-19 21:39:01 [31merror[39m: Error: jwt expired
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:15:25)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15

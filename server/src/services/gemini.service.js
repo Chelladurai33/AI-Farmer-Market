@@ -160,17 +160,56 @@ const getMockDemandForecast = (userPrompt) => {
   };
 };
 
-const getMockChatResponse = (userMessage, isTamil) => {
+const getMockChatResponse = (userMessage, isTamil, systemPrompt = '') => {
   const lowerMsg = userMessage.toLowerCase();
+  
+  // Try to extract weather context from systemPrompt
+  let weatherInfo = "Current weather looks okay.";
+  let windSpeed = 0;
+  let isRainingSoon = false;
+  
+  const weatherMatch = systemPrompt.match(/Current Weather:\s*([^]+?)(?=\n|$)/);
+  if (weatherMatch) {
+    weatherInfo = weatherMatch[1];
+    if (weatherInfo.includes('Wind:')) {
+      const windMatch = weatherInfo.match(/Wind:\s*([\d.]+)/);
+      if (windMatch) windSpeed = parseFloat(windMatch[1]);
+    }
+    if (weatherInfo.toLowerCase().includes('rain') || weatherInfo.toLowerCase().includes('shower')) {
+      isRainingSoon = true;
+    }
+  }
+
+  const isSprayingQuestion = lowerMsg.includes('spray') || lowerMsg.includes('pesticide') || lowerMsg.includes('fertilizer');
+  const isRainQuestion = lowerMsg.includes('rain');
+
   if (isTamil) {
+    if (isSprayingQuestion) {
+      if (windSpeed > 10) return `காற்று வேகமாக (${windSpeed} m/s) வீசுகிறது. எனவே இன்று பூச்சிக்கொல்லி தெளிக்க வேண்டாம்.`;
+      if (isRainingSoon) return `விரைவில் மழை பெய்ய வாய்ப்புள்ளது. எனவே இன்று பூச்சிக்கொல்லி தெளிக்க வேண்டாம்.`;
+      return "இன்று வானிலை சாதகமாக உள்ளது. நீங்கள் தாராளமாக பூச்சிக்கொல்லி/உரம் தெளிக்கலாம்.";
+    }
+    if (isRainQuestion) {
+      if (isRainingSoon) return "ஆம், மழை பெய்ய வாய்ப்புள்ளது. உங்கள் பயிர்களைப் பாதுகாத்துக் கொள்ளுங்கள்.";
+      return "இன்று மழை பெய்ய வாய்ப்பில்லை. வானிலை சீராக இருக்கும்.";
+    }
     if (lowerMsg.includes('விலை') || lowerMsg.includes('சந்தை')) {
       return "இப்போது சந்தையில் தக்காளி மற்றும் வெங்காயம் ஆகியவற்றின் தேவையும் விலையும் அதிகரித்துள்ளது. நீங்கள் உங்கள் விளைபொருட்களை நேரடியாக AgroConnect சந்தையில் விற்று அதிக லாபம் பெறலாம்.";
     }
     if (lowerMsg.includes('நோய்') || lowerMsg.includes('இலை')) {
       return "உங்கள் பயிரின் இலையில் புள்ளிகள் அல்லது சுருக்கம் இருந்தால், தயவுசெய்து 'Disease Detection' பிரிவில் ஒரு புகைப்படத்தைப் பதிவேற்றவும். எங்கள் AI அதை ஆராய்ந்து தீர்வு வழங்கும்.";
     }
-    return "வணக்கம்! நான் AgroBot. பயிர் சாகுபடி, சந்தை விலை, பூச்சிக்கொல்லி மேலாண்மை அல்லது குளிர் சேமிப்பு பற்றி ஏதேனும் உதவி தேவையா?";
+    return "வணக்கம்! நான் AgroBot (Mock). உங்களது Gemini API Key-ஐ .env ஃபைலில் செட் செய்தால் நான் இன்னும் புத்திசாலியாக செயல்படுவேன்! இப்போதைக்கு பயிர் சாகுபடி அல்லது வானிலை பற்றி கேளுங்கள்.";
   } else {
+    if (isSprayingQuestion) {
+      if (windSpeed > 10) return `Wind speed is currently high (${windSpeed} m/s). Spraying is NOT recommended because the chemical may drift.`;
+      if (isRainingSoon) return `Rain is expected soon. Spraying is NOT recommended as it will wash away the chemicals.`;
+      return "Weather conditions are currently favorable. You can proceed with spraying fertilizer or pesticides.";
+    }
+    if (isRainQuestion) {
+      if (isRainingSoon) return "Yes, rain is expected based on current weather patterns. Plan your farm activities accordingly.";
+      return "No rain is expected in the immediate forecast. It's a good day for field work.";
+    }
     if (lowerMsg.includes('price') || lowerMsg.includes('rate') || lowerMsg.includes('market')) {
       return "Currently, market prices for green vegetables and pulses are showing a rising trend. I suggest analyzing the price prediction dashboard to find the best time to sell.";
     }
@@ -178,9 +217,9 @@ const getMockChatResponse = (userMessage, isTamil) => {
       return "If you notice leaf spots or discoloration, please upload a photo in the 'Disease Detection' section for a complete diagnosis and organic/chemical remedies.";
     }
     if (lowerMsg.includes('weather')) {
-      return "Moderate rainfall is expected in the region next week. Ensure proper drainage in your fields to prevent waterlogging and root rot.";
+      return `Current conditions: ${weatherInfo}. Please ensure proper field management based on these conditions.`;
     }
-    return "Hello! I am AgroBot, your farming assistant. I can help you with crop prices, disease identification, farming practices, and weather advice. What would you like to know today?";
+    return "Hello! I am AgroBot (Mock Mode). To get fully intelligent answers, please configure your GEMINI_API_KEY in the server .env file! Right now, you can ask me about spraying, rain, or crop prices.";
   }
 };
 
@@ -258,9 +297,9 @@ const callGeminiVision = async (imageBuffer, mimeType, prompt, originalName = ''
  * Call Gemini for plain text (chat).
  */
 const callGeminiText = async (systemPrompt, history, userMessage) => {
-  const isTamil = systemPrompt.includes('Tamil') || systemPrompt.includes('தமிழ்');
+  const isTamil = systemPrompt.includes('Respond in Tamil') || systemPrompt.includes('(தமிழ்)');
   if (!hasValidKey()) {
-    return getMockChatResponse(userMessage, isTamil);
+    return getMockChatResponse(userMessage, isTamil, systemPrompt);
   }
 
   try {
@@ -277,7 +316,7 @@ const callGeminiText = async (systemPrompt, history, userMessage) => {
     return result.response.text();
   } catch (err) {
     logger.warn(`Gemini Chat failed: ${err.message}`);
-    return getMockChatResponse(userMessage, isTamil);
+    return getMockChatResponse(userMessage, isTamil, systemPrompt);
   }
 };
 

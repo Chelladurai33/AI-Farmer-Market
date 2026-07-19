@@ -17,14 +17,19 @@ If asked about unrelated topics, politely redirect to farming topics.`;
 
 const sendMessage = async (req, res, next) => {
   try {
-    const { message, history = [], language = 'en' } = req.body;
+    const { message, history = [], language = 'en', context = null } = req.body;
     if (!message || !message.trim()) {
       return sendError(res, 'Message is required', 400);
     }
 
+    let finalPrompt = CHAT_SYSTEM_PROMPT;
+    if (context) {
+      finalPrompt += `\n\nUSER CONTEXT:\nLocation: ${context.location || 'Unknown'}\nCurrent Weather: ${context.weather || 'Unknown'}\nUse this context to give highly personalized, accurate advice. E.g., if wind speed is high, advise against spraying pesticides. If it's raining soon, advise against irrigation.`;
+    }
+
     const systemPrompt = language === 'ta'
-      ? CHAT_SYSTEM_PROMPT + '\nRespond in Tamil (தமிழ்) language.'
-      : CHAT_SYSTEM_PROMPT;
+      ? finalPrompt + '\nRespond in Tamil (தமிழ்) language.'
+      : finalPrompt;
 
     let reply;
     try {
