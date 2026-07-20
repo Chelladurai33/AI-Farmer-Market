@@ -1,18 +1,30 @@
 const jwt = require('jsonwebtoken');
-
 const { AppError } = require('./errorHandler');
-
 const prisma = require('../utils/prisma');
 
-const requireAuth = async (req, res, next) => {
+/**
+ * requireAuth — verifies JWT and attaches user to req.
+ * Throws 401 if token is missing/invalid, 403 if account suspended.
+ */
+const requireAuth = async (req, _res, next) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      throw new AppError('Authentication required. Please log in.', 401);
+      return next(new AppError('Authentication required. Please log in.', 401));
     }
 
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    if (!token) {
+      return next(new AppError('Malformed authorization header.', 401));
+    }
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    } catch (jwtErr) {
+      // Let errorHandler classify JsonWebTokenError / TokenExpiredError
+      return next(jwtErr);
+    }
 
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
@@ -20,11 +32,11 @@ const requireAuth = async (req, res, next) => {
     });
 
     if (!user) {
-      throw new AppError('User not found. Please log in again.', 401);
+      return next(new AppError('User account no longer exists. Please log in again.', 401));
     }
 
     if (!user.isVerified) {
-      throw new AppError('Your account has been suspended or is not verified yet.', 403);
+      return next(new AppError('Your account is suspended or not yet verified.', 403));
     }
 
     req.user = user;
@@ -34,34 +46,46 @@ const requireAuth = async (req, res, next) => {
   }
 };
 
-const requireRole = (roles) => {
-  return (req, res, next) => {
-    if (!req.user) {
-      return next(new AppError('Authentication required.', 401));
-    }
-    if (!roles.includes(req.user.role)) {
-      return next(new AppError(`Access denied. Required role: ${roles.join(' or ')}`, 403));
-    }
-    next();
-  };
+/**
+ * requireRole — role-based access control.
+ * Must be used AFTER requireAuth.
+ */
+const requireRole = (roles) => (req, _res, next) => {
+  if (!req.user) {
+    return next(new AppError('Authentication required.', 401));
+  }
+  if (!roles.includes(req.user.role)) {
+    return next(
+      new AppError(`Access denied. Requires role: ${roles.join(' or ')}.`, 403)
+    );
+  }
+  next();
 };
 
-const optionalAuth = async (req, res, next) => {
+/**
+ * optionalAuth — attaches user if valid token present, never throws.
+ * Useful for public routes that show extra info to logged-in users.
+ */
+const optionalAuth = async (req, _res, next) => {
   try {
     const authHeader = req.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
       const token = authHeader.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-      const user = await prisma.user.findUnique({
-        where: { id: decoded.userId },
-        select: { id: true, name: true, email: true, role: true },
-      });
-      req.user = user;
+      if (token) {
+        const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+        const user = await prisma.user.findUnique({
+          where: { id: decoded.userId },
+          select: { id: true, name: true, email: true, role: true, isVerified: true },
+        });
+        if (user && user.isVerified) {
+          req.user = user;
+        }
+      }
     }
-    next();
   } catch {
-    next();
+    // Silent fail — optional auth should never block the request
   }
+  next();
 };
 
 module.exports = { requireAuth, requireRole, optionalAuth };

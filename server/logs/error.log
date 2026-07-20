@@ -36632,3 +36632,53 @@ TokenExpiredError: jwt expired
     at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
     at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
     at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-20 07:27:41 [31merror[39m: [31m[GET] /api/users/me — jwt expired[39m
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:23:21)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-20 07:27:41 [31merror[39m: [31m[GET] /api/users/me — jwt expired[39m
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:23:21)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-20 07:27:42 [31merror[39m: [31m[GET] /api/notifications — jwt expired[39m
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:23:21)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-20 07:27:42 [31merror[39m: [31m[GET] /api/notifications — jwt expired[39m
+TokenExpiredError: jwt expired
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\jsonwebtoken\verify.js:101:10)
+    at requireAuth (C:\Users\Asus\Desktop\AI Farmer MARKET\server\src\middleware\auth.middleware.js:23:21)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Asus\Desktop\AI Farmer MARKET\server\node_modules\router\index.js:295:15
+2026-07-20 07:27:58 [31merror[39m: [31mOpenWeather API error: Request failed with status code 401[39m
+2026-07-20 07:28:51 [31merror[39m: [31mOpenWeather API error: Request failed with status code 401[39m

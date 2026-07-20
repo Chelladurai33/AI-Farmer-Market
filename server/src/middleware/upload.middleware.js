@@ -1,22 +1,45 @@
 const multer = require('multer');
+const { AppError } = require('./errorHandler');
 
-// Use memory storage so we can stream directly to Cloudinary
+// Use memory storage — buffer is streamed directly to Cloudinary
 const storage = multer.memoryStorage();
 
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image/')) {
-    cb(null, true);
-  } else {
-    cb(new Error('Only image files are allowed'), false);
+// Allow only common image MIME types
+const ALLOWED_MIME_TYPES = new Set([
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+]);
+
+const fileFilter = (_req, file, cb) => {
+  if (ALLOWED_MIME_TYPES.has(file.mimetype)) {
+    return cb(null, true);
   }
+  cb(new AppError('Only JPEG, PNG, WebP, and GIF images are allowed.', 400), false);
 };
 
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  limits: {
+    fileSize: 5 * 1024 * 1024,  // 5 MB
+    files: 1,                    // one file per request
+  },
 });
 
-const uploadSingle = upload.single('image');
+/**
+ * uploadSingle — multer middleware for a single "image" field.
+ * Wraps multer's callback-based error into Express next().
+ */
+const uploadSingle = (req, res, next) => {
+  upload.single('image')(req, res, (err) => {
+    if (err) {
+      return next(err); // Multer errors are handled in errorHandler
+    }
+    next();
+  });
+};
 
 module.exports = { uploadSingle };

@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { sendSuccess, sendError } = require('../utils/apiResponse');
 const prisma = require('../utils/prisma');
+const logger = require('../utils/logger');
 
 const CACHE_TTL_MS = 30 * 60 * 1000;
 const weatherCache = new Map();
@@ -126,7 +127,7 @@ const getWeather = async (req, res, next) => {
       curData = cur.data;
       fcastData = fcast.data;
     } catch (apiErr) {
-      console.error('OpenWeather API Error:', apiErr.response?.data || apiErr.message);
+      logger.error('OpenWeather API error:', { message: apiErr.message, data: apiErr.response?.data });
       // Fallback to mock if OpenWeather call fails
       const mockData = getMockWeather(location);
       mockData.apiError = apiErr.response?.data?.message || apiErr.message;

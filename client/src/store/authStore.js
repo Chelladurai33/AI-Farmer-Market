@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import api from '../lib/api';
 
 const useAuthStore = create(
@@ -9,9 +9,11 @@ const useAuthStore = create(
       accessToken: null,
       isAuthenticated: false,
       isLoading: false,
+      error: null,
 
+      // ── Login ──────────────────────────────────────────────────────────────
       login: async (email, password) => {
-        set({ isLoading: true });
+        set({ isLoading: true, error: null });
         try {
           const res = await api.post('/auth/login', { email, password });
           const { user, accessToken } = res.data.data;
@@ -19,13 +21,15 @@ const useAuthStore = create(
           set({ user, accessToken, isAuthenticated: true, isLoading: false });
           return { success: true, user };
         } catch (err) {
-          set({ isLoading: false });
-          throw new Error(err.response?.data?.error || 'Login failed');
+          const message = err.response?.data?.error || 'Login failed. Please try again.';
+          set({ isLoading: false, error: message });
+          throw new Error(message);
         }
       },
 
+      // ── Register ───────────────────────────────────────────────────────────
       register: async (data) => {
-        set({ isLoading: true });
+        set({ isLoading: true, error: null });
         try {
           const res = await api.post('/auth/register', data);
           const { user, accessToken } = res.data.data;
@@ -33,33 +37,55 @@ const useAuthStore = create(
           set({ user, accessToken, isAuthenticated: true, isLoading: false });
           return { success: true, user };
         } catch (err) {
-          set({ isLoading: false });
-          throw new Error(err.response?.data?.error || 'Registration failed');
+          const message = err.response?.data?.error || 'Registration failed. Please try again.';
+          set({ isLoading: false, error: message });
+          throw new Error(message);
         }
       },
 
+      // ── Logout ─────────────────────────────────────────────────────────────
       logout: async () => {
-        try { await api.post('/auth/logout'); } catch {}
+        try {
+          await api.post('/auth/logout');
+        } catch {
+          // Silent — even if server logout fails, clear local state
+        }
         localStorage.removeItem('accessToken');
-        set({ user: null, accessToken: null, isAuthenticated: false });
+        // Clear persisted storage too
+        useAuthStore.persist.clearStorage();
+        set({ user: null, accessToken: null, isAuthenticated: false, error: null });
         window.location.href = '/login';
       },
 
+      // ── Fetch current user (on app init) ───────────────────────────────────
       fetchMe: async () => {
-        if (!localStorage.getItem('accessToken')) return;
+        const token = localStorage.getItem('accessToken');
+        if (!token) return;
         try {
           const res = await api.get('/users/me');
           set({ user: res.data.data, isAuthenticated: true });
         } catch {
-          set({ user: null, isAuthenticated: false });
+          // Token invalid — clear everything silently
+          localStorage.removeItem('accessToken');
+          set({ user: null, accessToken: null, isAuthenticated: false });
         }
       },
 
-      updateUser: (userData) => set({ user: { ...get().user, ...userData } }),
+      // ── Update user data in store (after profile edits) ────────────────────
+      updateUser: (userData) =>
+        set({ user: { ...get().user, ...userData } }),
+
+      // ── Clear error ────────────────────────────────────────────────────────
+      clearError: () => set({ error: null }),
     }),
     {
       name: 'auth-storage',
-      partialize: (state) => ({ user: state.user, accessToken: state.accessToken, isAuthenticated: state.isAuthenticated }),
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        user: state.user,
+        accessToken: state.accessToken,
+        isAuthenticated: state.isAuthenticated,
+      }),
     }
   )
 );

@@ -1,30 +1,43 @@
-
 const { z } = require('zod');
 const { sendSuccess, sendError, sendValidationError } = require('../utils/apiResponse');
 const cloudinaryService = require('../services/cloudinary.service');
-
+const logger = require('../utils/logger');
 const prisma = require('../utils/prisma');
 
 const productSchema = z.object({
-  name: z.string().min(2),
-  categoryId: z.string().uuid(),
-  quantity: z.coerce.number().positive(),
-  unit: z.string().min(1),
-  expectedPrice: z.coerce.number().positive(),
-  harvestDate: z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date format' }),
-  subDistrict: z.string().optional(),
-  village: z.string().transform(val => val.trim() || 'N/A'),
-  district: z.string().min(1),
-  state: z.string().transform(val => val.trim() || 'Tamil Nadu'),
-  description: z.string().optional(),
+  name: z.string().min(2).max(200),
+  categoryId: z.string().uuid('Invalid category ID'),
+  quantity: z.coerce.number().positive('Quantity must be positive'),
+  unit: z.string().min(1).max(20),
+  expectedPrice: z.coerce.number().positive('Price must be positive'),
+  harvestDate: z.string().refine(
+    (val) => !isNaN(Date.parse(val)),
+    { message: 'Invalid date format' }
+  ),
+  subDistrict: z.string().max(100).optional(),
+  village: z.string().max(100).transform((v) => v?.trim() || 'N/A'),
+  district: z.string().min(1).max(100),
+  state: z.string().max(100).transform((v) => v?.trim() || 'Tamil Nadu'),
+  description: z.string().max(2000).optional(),
 });
 
+// ─── GET /products ─────────────────────────────────────────────────────────────
 const getProducts = async (req, res, next) => {
   try {
     const {
-      category, district, minPrice, maxPrice,
-      sort = 'latest', page = 1, limit = 12, search
+      category,
+      district,
+      minPrice,
+      maxPrice,
+      sort = 'latest',
+      page = '1',
+      limit = '12',
+      search,
     } = req.query;
+
+    const pageNum = Math.max(1, parseInt(page, 10) || 1);
+    const limitNum = Math.min(50, Math.max(1, parseInt(limit, 10) || 12));
+    const skip = (pageNum - 1) * limitNum;
 
     const where = { isActive: true };
     if (category) where.categoryId = category;
@@ -41,12 +54,11 @@ const getProducts = async (req, res, next) => {
       ];
     }
 
-    const orderBy = sort === 'price_asc' ? { expectedPrice: 'asc' }
+    const orderBy =
+      sort === 'price_asc' ? { expectedPrice: 'asc' }
       : sort === 'price_desc' ? { expectedPrice: 'desc' }
-      : sort === 'rating' ? { createdAt: 'desc' }
       : { createdAt: 'desc' };
 
-    const skip = (parseInt(page) - 1) * parseInt(limit);
     const [products, total] = await Promise.all([
       prisma.product.findMany({
         where,
@@ -57,26 +69,34 @@ const getProducts = async (req, res, next) => {
         },
         orderBy,
         skip,
-        take: parseInt(limit),
+        take: limitNum,
       }),
       prisma.product.count({ where }),
     ]);
 
-    const productsWithRating = products.map(p => ({
+    const productsWithRating = products.map((p) => ({
       ...p,
-      avgRating: p.reviews.length ? p.reviews.reduce((a, r) => a + r.rating, 0) / p.reviews.length : 0,
+      avgRating: p.reviews.length
+        ? p.reviews.reduce((a, r) => a + r.rating, 0) / p.reviews.length
+        : 0,
       reviewCount: p.reviews.length,
     }));
 
     return sendSuccess(res, {
       products: productsWithRating,
-      pagination: { total, page: parseInt(page), limit: parseInt(limit), pages: Math.ceil(total / parseInt(limit)) }
+      pagination: {
+        total,
+        page: pageNum,
+        limit: limitNum,
+        pages: Math.ceil(total / limitNum),
+      },
     });
   } catch (err) {
     next(err);
   }
 };
 
+// ─── GET /products/my ─────────────────────────────────────────────────────────
 const getMyProducts = async (req, res, next) => {
   try {
     const products = await prisma.product.findMany({
@@ -94,6 +114,17 @@ const getMyProducts = async (req, res, next) => {
   }
 };
 
+// ─── GET /products/categories ─────────────────────────────────────────────────
+const getCategories = async (req, res, next) => {
+  try {
+    const categories = await prisma.category.findMany({ orderBy: { name: 'asc' } });
+    return sendSuccess(res, categories);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ─── GET /products/:id ────────────────────────────────────────────────────────
 const getProductById = async (req, res, next) => {
   try {
     const product = await prisma.product.findUnique({
@@ -107,13 +138,16 @@ const getProductById = async (req, res, next) => {
         },
       },
     });
-    if (!product) return sendError(res, 'Product not found', 404);
+    if (!product || !product.isActive) {
+      return sendError(res, 'Product not found.', 404);
+    }
     return sendSuccess(res, product);
   } catch (err) {
     next(err);
   }
 };
 
+// ─── POST /products ───────────────────────────────────────────────────────────
 const createProduct = async (req, res, next) => {
   try {
     const result = productSchema.safeParse(req.body);
@@ -127,7 +161,7 @@ const createProduct = async (req, res, next) => {
         const uploaded = await cloudinaryService.uploadImage(req.file.buffer, 'products');
         imageUrl = uploaded.secure_url;
       } catch (err) {
-        console.warn('Cloudinary upload failed, falling back to base64 data URL:', err.message);
+        logger.warn('Cloudinary product upload failed, using fallback:', err.message);
         const base64 = req.file.buffer.toString('base64');
         imageUrl = `data:${req.file.mimetype};base64,${base64}`;
       }
@@ -149,24 +183,25 @@ const createProduct = async (req, res, next) => {
   }
 };
 
+// ─── PUT /products/:id ────────────────────────────────────────────────────────
 const updateProduct = async (req, res, next) => {
   try {
     const existing = await prisma.product.findUnique({ where: { id: req.params.id } });
-    if (!existing) return sendError(res, 'Product not found', 404);
-    if (existing.farmerId !== req.user.id) return sendError(res, 'Not authorized', 403);
+    if (!existing || !existing.isActive) return sendError(res, 'Product not found.', 404);
+    if (existing.farmerId !== req.user.id) return sendError(res, 'Not authorized to edit this product.', 403);
 
     const result = productSchema.partial().safeParse(req.body);
     if (!result.success) {
       return sendValidationError(res, result.error.flatten().fieldErrors);
     }
 
-    let updateData = { ...result.data };
+    const updateData = { ...result.data };
     if (req.file) {
       try {
         const uploaded = await cloudinaryService.uploadImage(req.file.buffer, 'products');
         updateData.imageUrl = uploaded.secure_url;
       } catch (err) {
-        console.warn('Cloudinary upload failed, falling back to base64 data URL:', err.message);
+        logger.warn('Cloudinary product update upload failed:', err.message);
         const base64 = req.file.buffer.toString('base64');
         updateData.imageUrl = `data:${req.file.mimetype};base64,${base64}`;
       }
@@ -187,12 +222,14 @@ const updateProduct = async (req, res, next) => {
   }
 };
 
+// ─── DELETE /products/:id ─────────────────────────────────────────────────────
 const deleteProduct = async (req, res, next) => {
   try {
     const existing = await prisma.product.findUnique({ where: { id: req.params.id } });
-    if (!existing) return sendError(res, 'Product not found', 404);
-    if (existing.farmerId !== req.user.id) return sendError(res, 'Not authorized', 403);
+    if (!existing || !existing.isActive) return sendError(res, 'Product not found.', 404);
+    if (existing.farmerId !== req.user.id) return sendError(res, 'Not authorized to delete this product.', 403);
 
+    // Soft delete
     await prisma.product.update({
       where: { id: req.params.id },
       data: { isActive: false },
@@ -204,15 +241,12 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
-const getCategories = async (req, res, next) => {
-  try {
-    const categories = await prisma.category.findMany({
-      orderBy: { name: 'asc' },
-    });
-    return sendSuccess(res, categories);
-  } catch (err) {
-    next(err);
-  }
+module.exports = {
+  getProducts,
+  getMyProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getCategories,
 };
-
-module.exports = { getProducts, getMyProducts, getProductById, createProduct, updateProduct, deleteProduct, getCategories };

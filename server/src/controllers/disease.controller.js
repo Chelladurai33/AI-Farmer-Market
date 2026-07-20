@@ -3,7 +3,7 @@ const { sendSuccess, sendError } = require('../utils/apiResponse');
 const geminiService = require('../services/gemini.service');
 const cloudinaryService = require('../services/cloudinary.service');
 const pdfService = require('../services/pdf.service');
-
+const logger = require('../utils/logger');
 const prisma = require('../utils/prisma');
 
 const DISEASE_SYSTEM_PROMPT = `You are an expert agricultural plant pathologist AI.
@@ -36,7 +36,7 @@ const analyzeDisease = async (req, res, next) => {
       const uploaded = await cloudinaryService.uploadImage(req.file.buffer, 'disease-detection');
       imageUrl = uploaded.secure_url;
     } catch (err) {
-      console.warn('Cloudinary upload failed, falling back to base64 data URL:', err.message);
+      logger.warn('Cloudinary disease upload failed, using base64 fallback:', err.message);
       const base64 = req.file.buffer.toString('base64');
       imageUrl = `data:${req.file.mimetype};base64,${base64}`;
     }

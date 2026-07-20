@@ -113,7 +113,24 @@ const manageColdStorages = async (req, res, next) => {
 
 const updateColdStorage = async (req, res, next) => {
   try {
-    const storage = await prisma.coldStorage.update({ where: { id: req.params.id }, data: req.body });
+    const schema = z.object({
+      name: z.string().min(2).optional(),
+      address: z.string().min(5).optional(),
+      latitude: z.number().optional(),
+      longitude: z.number().optional(),
+      storageType: z.enum(['COLD', 'NORMAL']).optional(),
+      capacityTons: z.number().positive().optional(),
+      supportedCrops: z.array(z.string()).optional(),
+      minTemp: z.number().optional(),
+      maxTemp: z.number().optional(),
+      rentPerDay: z.number().positive().optional(),
+      phone: z.string().min(10).optional(),
+      operatingHours: z.string().min(3).optional(),
+    });
+    const result = schema.safeParse(req.body);
+    if (!result.success) return sendValidationError(res, result.error.flatten().fieldErrors);
+
+    const storage = await prisma.coldStorage.update({ where: { id: req.params.id }, data: result.data });
     return sendSuccess(res, storage, 200, 'Cold storage updated');
   } catch (err) {
     next(err);

@@ -3,17 +3,23 @@
   "version": "1.0.0",
   "description": "AI Farmer Marketplace Backend API",
   "main": "src/index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
+    "build": "npx prisma generate",
     "seed": "node prisma/seed.js",
     "migrate": "npx prisma migrate dev",
+    "migrate:deploy": "npx prisma migrate deploy",
+    "db:studio": "npx prisma studio",
     "test": "jest tests/ --forceExit"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
   },
-  "keywords": [],
+  "keywords": ["farmer", "marketplace", "ai", "agriculture"],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
