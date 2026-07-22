@@ -1,6 +1,6 @@
 # 🌱 AI Farmer Marketplace
 
-A full-stack platform connecting farmers directly with buyers, powered by AI for crop price prediction, disease detection, demand forecasting, and smart advisory.
+A production-ready full-stack platform connecting farmers directly with buyers, powered by AI for crop price prediction, disease detection, demand forecasting, smart advisory, and multi-language support (English & Tamil).
 
 ---
 
@@ -8,19 +8,17 @@ A full-stack platform connecting farmers directly with buyers, powered by AI for
 
 | Layer | Choice |
 |-------|--------|
-| Frontend | React 18 + Vite, React Router DOM v6, Axios, Bootstrap 5 |
-| Backend | Node.js 20+, Express.js |
-| Database | PostgreSQL 15+ |
-| ORM | Prisma ORM |
-| Auth | JWT (access + refresh tokens), bcrypt |
-| AI | Google Gemini API + Gemini Vision |
-| Image Storage | Cloudinary |
-| Maps | Google Maps JavaScript API + Places API |
-| Weather | OpenWeather API |
-| Validation | Zod |
-| State Management | Zustand |
-| Charts | Recharts |
-| PDF | pdf-lib |
+| **Frontend** | React 19 + Vite + React Router DOM v7 + Bootstrap 5 |
+| **Backend** | Node.js 20+ + Express.js 5 |
+| **Database** | PostgreSQL 15+ |
+| **ORM** | Prisma ORM |
+| **Auth** | JWT (access + refresh tokens with cookie/header support) |
+| **AI Engine** | Google Gemini API + Gemini Vision + Smart Instant Engine |
+| **Image Storage** | Cloudinary |
+| **Maps & Location** | Google Maps JavaScript API + Places API |
+| **Weather** | OpenWeather API |
+| **Validation & State** | Zod + Zustand |
+| **Charts & PDF** | Recharts + pdf-lib |
 
 ---
 
@@ -28,34 +26,47 @@ A full-stack platform connecting farmers directly with buyers, powered by AI for
 
 ```
 ai-farmer-marketplace/
-├── client/          # React + Vite frontend
-├── server/          # Express API backend
-│   ├── prisma/
-│   │   ├── schema.prisma
-│   │   └── seed.js
+├── client/                  # React + Vite frontend
 │   ├── src/
-│   │   ├── routes/
-│   │   ├── controllers/
-│   │   ├── services/
-│   │   ├── middleware/
-│   │   └── utils/
+│   │   ├── components/      # Reusable UI components & layouts
+│   │   ├── pages/           # Farmer, Buyer, Admin, Auth & Public pages
+│   │   ├── store/           # Zustand state management
+│   │   └── lib/             # API client & helpers
+│   ├── .env.example
+│   └── vite.config.js
+├── server/                  # Express API backend
+│   ├── prisma/
+│   │   ├── schema.prisma    # Database models & relationships
+│   │   └── seed.js          # Seed data script
+│   ├── src/
+│   │   ├── routes/          # Express route definitions
+│   │   ├── controllers/     # API request handlers
+│   │   ├── services/        # Gemini, Cloudinary, PDF services
+│   │   ├── middleware/      # Auth, Rate Limiter, Error Handler
+│   │   └── utils/           # Prisma client, Logger, API responses
 │   └── .env.example
+├── render.yaml              # Render Infrastructure-as-Code Blueprint
+├── .gitignore
 └── README.md
 ```
 
 ---
 
-## 🛠️ Setup Instructions
+## 🛠️ Local Development Setup
 
-### Prerequisites
+### 1. Prerequisites
 
 - Node.js 20+
 - PostgreSQL 15+
 - npm or yarn
 
-### 1. Clone and Install
+### 2. Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/Chelladurai33/AI-Farmer-Market.git
+cd AI-Farmer-Market
+
 # Install server dependencies
 cd server
 npm install
@@ -65,31 +76,29 @@ cd ../client
 npm install
 ```
 
-### 2. Configure Environment Variables
+### 3. Environment Configuration
 
 ```bash
-# Server
+# Server environment variables
 cp server/.env.example server/.env
-# Fill in all values in server/.env
 
-# Client
+# Client environment variables
 cp client/.env.example client/.env
-# Fill in all values in client/.env
 ```
 
-### 3. Database Setup
+### 4. Database Initialization
 
 ```bash
 cd server
 
-# Run migrations
-npx prisma migrate dev --name init
+# Push schema to database
+npx prisma db push
 
-# Seed the database
-node prisma/seed.js
+# (Optional) Seed initial categories & users
+npm run seed
 ```
 
-### 4. Run Development Servers
+### 5. Start Development Servers
 
 ```bash
 # Terminal 1 - Backend (from /server)
@@ -99,58 +108,62 @@ npm run dev
 npm run dev
 ```
 
-The API will be available at `http://localhost:5000`  
-The client will be available at `http://localhost:5173`
+- **Backend API**: `http://localhost:5000`
+- **Frontend App**: `http://localhost:5173`
+- **Health Check**: `http://localhost:5000/health`
 
 ---
 
-## 👥 User Roles
+## ☁️ Deploying to Render (Blueprint Deployment)
 
-- **FARMER** — List crops, manage orders, use AI tools (price prediction, disease detection, weather, cold storage)
-- **BUYER** — Browse marketplace, place orders, manage wishlist
-- **ADMIN** — Full platform management, analytics, user verification
+This repository includes a pre-configured `render.yaml` Blueprint file for automatic 1-click deployment on Render.
+
+### Steps to Deploy on Render
+
+1. Log in to [Render Dashboard](https://dashboard.render.com/).
+2. Click **New +** → **Blueprint**.
+3. Connect your GitHub repository (`Chelladurai33/AI-Farmer-Market`).
+4. Render will automatically detect `render.yaml` and prompt for required environment variables.
+
+### Environment Variables on Render
+
+| Service | Environment Variable | Recommended Value |
+|---------|----------------------|-------------------|
+| **API Web Service** | `NODE_ENV` | `production` |
+| | `DATABASE_URL` | Render PostgreSQL Connection URI |
+| | `JWT_ACCESS_SECRET` | Auto-generated by Render Blueprint |
+| | `JWT_REFRESH_SECRET` | Auto-generated by Render Blueprint |
+| | `GEMINI_API_KEY` | Your Google Gemini API Key |
+| | `CLIENT_URL` | `https://<your-client-site>.onrender.com` |
+| **Static Site** | `VITE_API_BASE_URL` | `https://<your-api-service>.onrender.com/api` |
 
 ---
 
-## 🤖 AI Features
+## 👥 User Roles & Access
 
-1. **Crop Price Prediction** — Get price forecasts for tomorrow and next week
-2. **Demand Forecasting** — Understand market demand for your crops
-3. **Disease Detection** — Upload leaf photos for AI-powered disease analysis
-4. **Cold Storage Advisor** — Find nearby storage + store-vs-sell profit comparison
-5. **Weather Dashboard** — 7-day forecast with farming advice
-6. **AI Chat Assistant** — Bilingual (English/Tamil) farming advisor
+- **FARMER**: Crop management, AI price predictions, disease detection, weather dashboard, cold storage booking, solar drying plant reservation.
+- **BUYER**: Direct marketplace browsing, wishlist management, cart checkout, order tracking.
+- **ADMIN**: User verification, platform analytics, system-wide management.
 
 ---
 
-## 🌐 API Endpoints
+## 🌐 Key API Routes
 
 ```
-POST   /api/auth/register
-POST   /api/auth/login
-POST   /api/auth/logout
-POST   /api/auth/refresh
-GET    /api/users/me
-PUT    /api/users/me
-GET    /api/products
-POST   /api/products
-GET    /api/products/:id
-PUT    /api/products/:id
-DELETE /api/products/:id
-GET    /api/orders
-POST   /api/orders
-PATCH  /api/orders/:id/status
-POST   /api/payments
-POST   /api/predictions/price
-GET    /api/predictions/price/history
-POST   /api/forecast/demand
-POST   /api/disease-detection/analyze
-GET    /api/disease-detection/history
-GET    /api/cold-storage/nearby
-POST   /api/cold-storage/:id/book
-GET    /api/weather/:district
-POST   /api/chatbot/message
-GET    /api/notifications
-PATCH  /api/notifications/:id/read
-GET    /api/admin/stats
+GET    /health                            # System health check
+POST   /api/auth/register                 # User registration
+POST   /api/auth/login                    # User authentication
+GET    /api/products                      # Get marketplace products
+POST   /api/products                      # Add new product
+POST   /api/predictions/price             # Forecast crop prices
+POST   /api/forecast/demand               # Regional demand analyzer
+POST   /api/disease-detection/analyze     # AI crop disease analysis
+GET    /api/cold-storage/nearby           # Find cold storage facilities
+POST   /api/chatbot/message               # Instant AgroBot chat
 ```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.

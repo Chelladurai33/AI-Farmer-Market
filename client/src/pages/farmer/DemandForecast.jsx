@@ -1,16 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import useAuthStore from '../../store/authStore';
 import api from '../../lib/api';
 
-const DISTRICTS = ['Chennai','Coimbatore','Madurai','Salem','Trichy','Tirunelveli','Erode','Vellore','Thanjavur','Tiruppur'];
-const CROPS = ['Tomato','Onion','Potato','Brinjal','Cabbage','Mango','Banana','Rice','Wheat','Turmeric','Chilli'];
+// All 38 Tamil Nadu districts with their taluks (subdistricts)
+const TN_DISTRICTS = {
+  'Ariyalur':        ['Ariyalur','Jayankondam','Sendurai','Udayarpalayam'],
+  'Chengalpattu':    ['Chengalpattu','Cheyyur','Maduranthakam','Thiruporur','Tambaram'],
+  'Chennai':         ['Ambattur','Egmore','Madhavaram','Sholinganallur','Tambaram','Tiruvottiyur'],
+  'Coimbatore':      ['Coimbatore North','Coimbatore South','Mettupalayam','Pollachi','Valparai','Sulur'],
+  'Cuddalore':       ['Cuddalore','Kattumannarkoil','Kurinjipadi','Panruti','Vriddhachalam','Bhuvanagiri'],
+  'Dharmapuri':      ['Dharmapuri','Harur','Palacode','Pennagaram'],
+  'Dindigul':        ['Dindigul','Natham','Nilakottai','Oddanchatram','Palani','Vedasandur'],
+  'Erode':           ['Erode','Bhavani','Gobichettipalayam','Perundurai','Sathyamangalam'],
+  'Kallakurichi':    ['Kallakurichi','Chinnasalem','Sankarapuram','Ulundurpet'],
+  'Kancheepuram':    ['Kancheepuram','Uthiramerur','Walajabad'],
+  'Kanyakumari':     ['Agastheeswaram','Kalkulam','Killiyoor','Vilavancode'],
+  'Karur':           ['Karur','Aravakurichi','Krishnarayapuram','Kulithalai'],
+  'Krishnagiri':     ['Krishnagiri','Bargur','Denkanikottai','Hosur','Pochampalli','Uthangarai'],
+  'Madurai':         ['Madurai North','Madurai South','Melur','Peraiyur','Thirumangalam','Usilampatti'],
+  'Mayiladuthurai':  ['Mayiladuthurai','Kuthalam','Sirkali','Tharangambadi'],
+  'Nagapattinam':    ['Nagapattinam','Kilvelur','Thirukkuvalai','Vedaranyam'],
+  'Namakkal':        ['Namakkal','Kolli Hills','Kumarapalayam','Rasipuram','Tiruchengode'],
+  'Nilgiris':        ['Gudalur','Kotagiri','Ooty','Pandalur'],
+  'Perambalur':      ['Perambalur','Alathur','Kunnam','Veppanthattai'],
+  'Pudukkottai':     ['Pudukkottai','Alangudi','Aranthangi','Gandharvakottai','Illuppur','Karambakudi','Tirumayam'],
+  'Ramanathapuram':  ['Ramanathapuram','Mudukulathur','Paramakudi','Rameswaram','Tiruvadanai'],
+  'Ranipet':         ['Ranipet','Arakkonam','Arcot','Nemili','Sholinghur','Walajah'],
+  'Salem':           ['Salem','Attur','Edapadi','Mettur','Omalur','Sankagiri','Yercaud'],
+  'Sivaganga':       ['Sivaganga','Devakottai','Ilayangudi','Karaikudi','Manamadurai','Tiruppattur'],
+  'Tenkasi':         ['Tenkasi','Alangulam','Kadayanallur','Sankarankovil','Shencottah'],
+  'Thanjavur':       ['Thanjavur','Kumbakonam','Orathanadu','Papanasam','Pattukkottai','Peravurani','Thiruvaiyaru'],
+  'Theni':           ['Theni','Andipatti','Bodinayakanur','Periyakulam','Uthamapalayam'],
+  'Thoothukudi':     ['Thoothukudi','Ettayapuram','Kovilpatti','Sathankulam','Srivaikuntam','Tiruchendur','Vilathikulam'],
+  'Tiruchirappalli': ['Tiruchirappalli','Lalgudi','Manachanallur','Manapparai','Musiri','Srirangam','Thuraiyur','Tiruverumbur'],
+  'Tirunelveli':     ['Tirunelveli','Ambasamudram','Manur','Nanguneri','Palayamkottai','Radhapuram','Tenkasi'],
+  'Tirupathur':      ['Tirupathur','Ambur','Jolarpet','Vaniyambadi'],
+  'Tiruppur':        ['Tiruppur','Avinashi','Dharapuram','Kangeyam','Madathukulam','Palladam','Udumalaipettai'],
+  'Tiruvallur':      ['Tiruvallur','Gummidipoondi','Ponneri','Poonamallee','Tiruttani','Utukottai'],
+  'Tiruvannamalai':  ['Tiruvannamalai','Arni','Cheyyar','Chetpet','Polur','Vandavasi'],
+  'Tiruvarur':       ['Tiruvarur','Kodavasal','Mannargudi','Nannilam','Needamangalam','Papanasam'],
+  'Vellore':         ['Vellore','Gudiyatham','Katpadi','Pernambut','Tirupathur'],
+  'Viluppuram':      ['Viluppuram','Gingee','Kallakurichi','Tindivanam','Tirukoilur','Vanur'],
+  'Virudhunagar':    ['Virudhunagar','Aruppukkottai','Rajapalayam','Sivakasi','Srivilliputhur','Vembakkottai'],
+};
+
+const DISTRICTS = Object.keys(TN_DISTRICTS).sort();
+const CROPS = ['Tomato','Onion','Potato','Brinjal','Cabbage','Carrot','Mango','Banana','Rice','Wheat','Turmeric','Chilli','Groundnut','Cotton','Sugarcane','Tapioca','Coconut','Soya Bean'];
 
 const DemandForecast = () => {
   const { user } = useAuthStore();
-  const [form, setForm] = useState({ cropName: '', district: user?.district || '' });
+  const [form, setForm] = useState({ cropName: '', district: user?.district || '', subDistrict: '' });
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const subDistricts = form.district ? TN_DISTRICTS[form.district] || [] : [];
+
+  const handleDistrictChange = (e) => {
+    setForm(f => ({ ...f, district: e.target.value, subDistrict: '' }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,15 +94,24 @@ const DemandForecast = () => {
                 {CROPS.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <div className="mb-4">
+            <div className="mb-3">
               <label className="form-label-custom">District *</label>
-              <select className="form-control-custom" value={form.district} onChange={e => setForm(f => ({ ...f, district: e.target.value }))} required>
+              <select className="form-control-custom" value={form.district} onChange={handleDistrictChange} required>
                 <option value="">Select district</option>
                 {DISTRICTS.map(d => <option key={d} value={d}>{d}</option>)}
               </select>
             </div>
+            {subDistricts.length > 0 && (
+              <div className="mb-4">
+                <label className="form-label-custom">Subdistrict (Taluk) <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(optional — for hyper-local forecast)</span></label>
+                <select className="form-control-custom" value={form.subDistrict} onChange={e => setForm(f => ({ ...f, subDistrict: e.target.value }))}>
+                  <option value="">All taluks in {form.district}</option>
+                  {subDistricts.map(s => <option key={s} value={s}>{s}</option>)}
+                </select>
+              </div>
+            )}
             <button type="submit" className="btn-primary-custom w-100" disabled={loading}>
-              {loading ? '🤖 Analyzing demand...' : '📊 Forecast Demand'}
+              {loading ? '🤖 Analyzing real-time demand...' : '📊 Forecast Demand'}
             </button>
           </form>
         </div>
@@ -65,6 +122,9 @@ const DemandForecast = () => {
               <div style={{ width: 64, height: 64, borderRadius: 16, background: `${demandColors[result.demandLevel]}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.75rem' }}>📊</div>
               <div>
                 <div style={{ fontWeight: 800, fontSize: '1.25rem' }}>{result.cropName}</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 4 }}>
+                  {result.district}{result.subDistrict ? ` › ${result.subDistrict}` : ''}
+                </div>
                 <span style={{ padding: '4px 12px', borderRadius: 50, background: `${demandColors[result.demandLevel]}20`, color: demandColors[result.demandLevel], fontWeight: 700, fontSize: '0.875rem' }}>
                   {result.demandLevel} DEMAND
                 </span>
@@ -83,6 +143,15 @@ const DemandForecast = () => {
 
             <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1rem' }}>{result.reason}</p>
 
+            {result.targetBuyers?.length > 0 && (
+              <div style={{ marginBottom: '0.75rem' }}>
+                <div style={{ fontWeight: 700, fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem' }}>🎯 TARGET BUYERS</div>
+                <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                  {result.targetBuyers.map(b => <span key={b} style={{ padding: '2px 10px', borderRadius: 50, background: 'var(--primary-pale)', color: 'var(--primary)', fontSize: '0.75rem', fontWeight: 600 }}>{b}</span>)}
+                </div>
+              </div>
+            )}
+
             {result.recommendations?.length > 0 && (
               <div>
                 <div style={{ fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.5rem' }}>💡 Recommendations</div>
@@ -96,10 +165,22 @@ const DemandForecast = () => {
 
             {result.peakDemandMonths?.length > 0 && (
               <div style={{ marginTop: '0.75rem' }}>
-                <div style={{ fontWeight: 700, fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem' }}>PEAK MONTHS</div>
+                <div style={{ fontWeight: 700, fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem' }}>📅 PEAK MONTHS</div>
                 <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                   {result.peakDemandMonths.map(m => <span key={m} style={{ padding: '2px 10px', borderRadius: 50, background: 'var(--primary)', color: 'white', fontSize: '0.75rem', fontWeight: 600 }}>{m}</span>)}
                 </div>
+              </div>
+            )}
+
+            {result.exportPotential !== undefined && (
+              <div style={{ marginTop: '0.75rem', padding: '0.5rem 0.75rem', borderRadius: 8, background: result.exportPotential ? '#22c55e15' : '#ef444415', color: result.exportPotential ? '#16a34a' : '#dc2626', fontSize: '0.8rem', fontWeight: 600 }}>
+                {result.exportPotential ? '✈️ Export potential available via Tamil Nadu ports' : '🏠 Primarily local/domestic market demand'}
+              </div>
+            )}
+
+            {result.competitorSupply && (
+              <div style={{ marginTop: '0.5rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                Competitor Supply in region: <strong style={{ color: result.competitorSupply === 'LOW' ? '#22c55e' : result.competitorSupply === 'HIGH' ? '#ef4444' : '#f59e0b' }}>{result.competitorSupply}</strong>
               </div>
             )}
           </div>
@@ -114,4 +195,6 @@ const DemandForecast = () => {
     </div>
   );
 };
+
 export default DemandForecast;
+

@@ -19,7 +19,6 @@ const FarmerLayout = () => {
   const { user, logout } = useAuthStore();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isDark, setIsDark] = useState(false);
-  const navigate = useNavigate();
 
   const toggleTheme = () => {
     setIsDark(d => {

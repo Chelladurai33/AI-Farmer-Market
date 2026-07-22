@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../lib/api';
 import useAuthStore from '../../store/authStore';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-const DISTRICTS = ['Chennai','Coimbatore','Madurai','Salem','Trichy','Tirunelveli','Erode','Vellore','Thanjavur','Tiruppur'];
+const DISTRICTS = [
+  'Ariyalur','Chengalpattu','Chennai','Coimbatore','Cuddalore','Dharmapuri',
+  'Dindigul','Erode','Kallakurichi','Kancheepuram','Kanyakumari','Karur',
+  'Krishnagiri','Madurai','Mayiladuthurai','Nagapattinam','Namakkal','Nilgiris',
+  'Perambalur','Pudukkottai','Ramanathapuram','Ranipet','Salem','Sivaganga',
+  'Tenkasi','Thanjavur','Theni','Thoothukudi','Tiruchirappalli','Tirunelveli',
+  'Tirupathur','Tiruppur','Tiruvallur','Tiruvannamalai','Tiruvarur','Vellore',
+  'Viluppuram','Virudhunagar'
+];
 const CROPS = ['Tomato','Onion','Potato','Brinjal','Cabbage','Carrot','Mango','Banana','Rice','Wheat','Turmeric','Chilli','Groundnut'];
 
 const PricePrediction = () => {

@@ -14,21 +14,42 @@ const predictionSchema = z.object({
   unit: z.string().optional(),
 });
 
-const PRICE_SYSTEM_PROMPT = `You are an agricultural price prediction AI for Indian farmers.
-Given crop data, analyze market trends and return ONLY valid JSON with this EXACT structure:
+const PRICE_SYSTEM_PROMPT = `You are an expert agricultural market analyst specializing in Tamil Nadu, India.
+You have deep knowledge of:
+- All 38 Tamil Nadu district APMC (Agricultural Produce Market Committee) price data and historical trends
+- Tamil Nadu seasonal crop calendars: Kharif (June-Oct), Rabi (Nov-Feb), Zaid (Mar-May)
+- District-specific market demand: e.g., Coimbatore is a textile hub (cotton, turmeric), Thanjavur is the rice bowl, Dindigul is famous for chilli and garlic, Nilgiris for tea and vegetables, Madurai for jasmine and banana, Erode for turmeric, Namakkal for eggs and poultry feed crops
+- APMC mandi rates across Tamil Nadu (Chennai CMDA, Koyambedu market, Salem, Madurai Mattuthavani, etc.)
+- Seasonal demand fluctuations: festival seasons (Pongal, Diwali, Ramadan), school calendar, and monsoon impact
+- Supply chain factors: transportation costs from district to major cities, cold storage availability
+- Government MSP (Minimum Support Price) policies for paddy, pulses, oilseeds
+- Export demand from Tamil Nadu ports (Thoothukudi, Chennai) for specific crops
+
+REASONING PROCESS (do this internally before outputting):
+1. Identify the current month/season from the harvest date
+2. Check if district is a major production hub OR consumption center for this crop
+3. Factor in typical 30-day seasonal price movement for this crop in this district
+4. Consider festival/event demand within the next week
+5. Calculate realistic price range (do NOT vary more than ±25% from current price unless seasonal logic demands it)
+6. Ensure predictedNextWeek price reflects REAL market volatility (not just +5%)
+
+OUTPUT FORMAT - Return ONLY this valid JSON, no markdown, no explanation:
 {
-  "predictedTomorrow": <number: price per kg in INR>,
-  "predictedNextWeek": <number: price per kg in INR>,
+  "predictedTomorrow": <number: realistic price per kg in INR based on district APMC trends>,
+  "predictedNextWeek": <number: realistic price per kg in INR based on seasonal forecast>,
   "demandTrend": <"RISING" | "FALLING" | "STABLE">,
-  "confidence": <number between 0 and 1>,
-  "recommendation": <string: brief actionable advice for the farmer>,
-  "expectedProfitTomorrow": <number: total profit in INR if sold tomorrow>,
-  "expectedProfitNextWeek": <number: total profit in INR if sold next week>,
+  "confidence": <number 0.0-1.0: higher if crop is in-season for this district>,
+  "recommendation": <string: specific actionable advice mentioning the district's nearest APMC or market>,
+  "expectedProfitTomorrow": <number: predictedTomorrow * quantity>,
+  "expectedProfitNextWeek": <number: predictedNextWeek * quantity>,
   "bestSellingTime": <"NOW" | "TOMORROW" | "NEXT_WEEK" | "WAIT_LONGER">,
-  "marketInsights": [<string>, <string>, <string>]
+  "marketInsights": [
+    <string: district-specific supply/demand insight>,
+    <string: seasonal or weather factor affecting price>,
+    <string: actionable market tip e.g. nearest APMC, buyer type, grading advice>
+  ]
 }
-Base your prediction on seasonal patterns, district demand, crop type, and typical Indian agricultural market behavior.
-Return ONLY the JSON object, no explanation.`;
+CRITICAL: Base predictions on REAL Tamil Nadu market economics. Do NOT use fictional prices.`;
 
 const predictPrice = async (req, res, next) => {
   try {
@@ -38,12 +59,22 @@ const predictPrice = async (req, res, next) => {
     }
     const { cropName, district, currentPrice, harvestDate, quantity, unit } = result.data;
 
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const currentMonth = monthNames[today.getMonth()];
+    const harvestDateObj = new Date(harvestDate);
+    const daysToHarvest = Math.max(0, Math.round((harvestDateObj - today) / (1000 * 60 * 60 * 24)));
+    const season = today.getMonth() >= 5 && today.getMonth() <= 9 ? 'Kharif (Monsoon Season)' :
+                   today.getMonth() >= 10 || today.getMonth() <= 1 ? 'Rabi (Winter Season)' : 'Zaid (Summer Season)';
+
     const userPrompt = `Crop: ${cropName}
 District: ${district}, Tamil Nadu, India
 Current Market Price: ₹${currentPrice}/kg
-Harvest Date: ${harvestDate}
 Available Quantity: ${quantity} ${unit || 'kg'}
-Today's Date: ${new Date().toISOString().split('T')[0]}`;
+Harvest Date: ${harvestDate} (${daysToHarvest} days from today)
+Today's Date: ${todayStr} (${currentMonth}, ${season})
+Note: Calculate expectedProfitTomorrow = predictedTomorrow × ${quantity} and expectedProfitNextWeek = predictedNextWeek × ${quantity}`;
 
     let prediction;
     try {

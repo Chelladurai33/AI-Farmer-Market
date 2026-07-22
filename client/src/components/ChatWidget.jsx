@@ -91,27 +91,45 @@ const ChatWidget = () => {
   };
 
   const speakText = (text, lang) => {
+    if (!('speechSynthesis' in window)) return;
     try {
-      // Auto-detect Tamil characters to ensure correct pronunciation
+      window.speechSynthesis.cancel();
+
+      // Auto-detect Tamil script characters
       const isTamilText = /[\u0B80-\u0BFF]/.test(text);
-      const effectiveLang = isTamilText ? 'ta' : (lang === 'ta' ? 'ta' : 'en');
-      
-      // Create a highly reliable audio fallback using Google Translate's TTS API
-      // This works on all devices even if they lack native Tamil/English voices
-      const targetLang = effectiveLang;
-      const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${targetLang}&client=tw-ob&q=${encodeURIComponent(text)}`;
-      const audio = new Audio(url);
-      
-      audio.play().catch(() => {
-        // If Audio autoplay is blocked, fallback to Web Speech API
-        if ('speechSynthesis' in window) {
-          window.speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = effectiveLang === 'ta' ? 'ta-IN' : 'en-US';
-          utterance.rate = 0.9; // Slightly slower for better clarity
-          window.speechSynthesis.speak(utterance);
+      const targetLang = isTamilText || lang === 'ta' ? 'ta-IN' : 'en-US';
+
+      const doSpeak = () => {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = targetLang;
+        utterance.rate = 0.9;
+
+        // Try to find the best matching voice
+        const voices = window.speechSynthesis.getVoices();
+        const exactMatch = voices.find(v => v.lang === targetLang);
+        const partialMatch = voices.find(v => v.lang.startsWith(targetLang.split('-')[0]));
+        const chosenVoice = exactMatch || partialMatch || null;
+
+        if (chosenVoice) {
+          utterance.voice = chosenVoice;
         }
-      });
+
+        utterance.onerror = (e) => console.error('TTS Error:', e.error);
+        window.speechSynthesis.speak(utterance);
+      };
+
+      // Voices may not be loaded yet — wait for them
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        doSpeak();
+      } else {
+        window.speechSynthesis.onvoiceschanged = () => {
+          window.speechSynthesis.onvoiceschanged = null;
+          doSpeak();
+        };
+        // Trigger voice list load
+        window.speechSynthesis.getVoices();
+      }
     } catch (err) {
       console.error("TTS Error:", err);
     }
@@ -143,7 +161,10 @@ const ChatWidget = () => {
       speakText(reply, language);
       
     } catch {
-      setMessages(prev => [...prev, { role: 'model', content: language === 'ta' ? 'மன்னிக்கவும், பிழை ஏற்பட்டுள்ளது.' : 'Sorry, I\'m having trouble responding right now.' }]);
+      const fallbackMsg = language === 'ta' 
+        ? '🌱 மன்னிக்கவும், தற்காலிக இணைப்பு பிரச்சனை. எனினும் நான் பயிர் சாகுபடி, சந்தை விலைகள், வானிலை மற்றும் நோய் மேலாண்மைக்கு உங்களுக்கு உதவ தயார்!' 
+        : '🌱 I apologize for the momentary connection issue. However, I am ready to help you with crop advice, market prices, weather conditions, and disease management!';
+      setMessages(prev => [...prev, { role: 'model', content: fallbackMsg }]);
     } finally {
       setLoading(false);
     }
@@ -228,16 +249,19 @@ const ChatWidget = () => {
           </div>
 
           {/* Quick Actions */}
-          {messages.length === 1 && (
+          {messages.length <= 2 && (
             <div style={{ padding: '0.5rem 1rem', display: 'flex', gap: '0.5rem', overflowX: 'auto', background: '#f8fafc' }}>
               {[
                 { en: 'Can I spray pesticide today?', ta: 'இன்று பூச்சிக்கொல்லி தெளிக்கலாமா?' },
-                { en: 'Will it rain tomorrow?', ta: 'நாளை மழை பெய்யுமா?' }
+                { en: 'Market prices today?', ta: 'இன்றைய சந்தை விலை?' },
+                { en: 'Plant disease help', ta: 'பயிர் நோய் தீர்வு' },
+                { en: 'Government schemes', ta: 'அரசு திட்டங்கள்' },
+                { en: 'Cold storage advice', ta: 'குளிர் பதனக் கிடங்கு' }
               ].map((q, i) => (
                 <button 
                   key={i}
                   onClick={() => sendMessage(language === 'ta' ? q.ta : q.en)}
-                  style={{ whiteSpace: 'nowrap', padding: '0.4rem 0.8rem', borderRadius: '20px', border: '1px solid var(--primary)', background: 'var(--primary-pale)', color: 'var(--primary)', fontSize: '0.75rem', cursor: 'pointer' }}
+                  style={{ whiteSpace: 'nowrap', padding: '0.4rem 0.8rem', borderRadius: '20px', border: '1px solid var(--primary)', background: 'var(--primary-pale)', color: 'var(--primary)', fontSize: '0.75rem', cursor: 'pointer', fontWeight: 500 }}
                 >
                   {language === 'ta' ? q.ta : q.en}
                 </button>

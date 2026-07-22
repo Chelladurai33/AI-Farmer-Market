@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../lib/api';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({ farmers: 0, buyers: 0, products: 0, orders: 0 });

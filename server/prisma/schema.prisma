@@ -25,7 +25,7 @@ model User {
   longitude   Float?
   isVerified Boolean @default(false)
   createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  updatedAt  DateTime @default(now()) @updatedAt
 
   products         Product[]
   ordersAsBuyer    Order[]           @relation("BuyerOrders")
@@ -70,7 +70,7 @@ model Product {
   description   String?
   isActive      Boolean  @default(true)
   createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  updatedAt     DateTime @default(now()) @updatedAt
 
   orderItems OrderItem[]
   wishlist   Wishlist[]

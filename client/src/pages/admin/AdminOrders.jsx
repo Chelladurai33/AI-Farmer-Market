@@ -36,7 +36,7 @@ const AdminOrders = () => {
                   <td style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{o.items?.length}</td>
                   <td style={{ fontWeight: 700, color: 'var(--primary)' }}>₹{o.totalAmount.toLocaleString()}</td>
                   <td><span style={{ fontSize: '0.75rem', padding: '2px 6px', borderRadius: 50, background: o.payment?.status === 'SUCCESS' ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)', color: o.payment?.status === 'SUCCESS' ? '#16a34a' : '#dc2626', fontWeight: 600 }}>{o.payment?.status || 'UNPAID'}</span></td>
-                  <td><span style={{ fontSize: '0.75px', padding: '3px 8px', borderRadius: 50, background: `${statusColors[o.status]}20`, color: statusColors[o.status], fontWeight: 600, fontSize: '0.75rem' }}>{o.status}</span></td>
+                  <td><span style={{ padding: '3px 8px', borderRadius: 50, background: `${statusColors[o.status]}20`, color: statusColors[o.status], fontWeight: 600, fontSize: '0.75rem' }}>{o.status}</span></td>
                   <td style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{new Date(o.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}
